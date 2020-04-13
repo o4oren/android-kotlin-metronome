@@ -62,10 +62,13 @@ class MetronomeFragment : Fragment() {
     private fun play() {
         metronomeService?.play()
         playButton.isEnabled = false
+        pauseButton.isEnabled = true
     }
 
     private fun pause() {
         metronomeService?.pause()
+        playButton.isEnabled = true
+        pauseButton.isEnabled = false
     }
 
     private fun updateBpm(bpm: Int) {
