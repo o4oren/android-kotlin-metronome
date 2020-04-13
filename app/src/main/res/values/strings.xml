@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Metronome</string>
+    <string name="settings_menu_item">Settings</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="metronome_fragment_label">Metronome</string>
+    <string name="settings_fragment_label">Settings</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="bpm">BPM</string>
+    <string name="play">Play</string>
+    <string name="stop">Stop</string>
+</resources>
