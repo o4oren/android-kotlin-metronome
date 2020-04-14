@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,16 +22,20 @@ class MetronomeFragment : Fragment() {
 
     private var isBound = false
     private var metronomeService: MetronomeService? = null
+    private val TAG = "METRONOME_FRAGMENT"
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        Log.i(TAG, "on create view")
+
         return inflater.inflate(R.layout.metronome_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.i(TAG, "View created")
         activity?.bindService(
             Intent(
                 activity,
@@ -88,6 +93,8 @@ class MetronomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.i(TAG, "On destroy")
+
         if (isBound) {
             // Detach our existing connection.
             activity!!.unbindService(mConnection)
