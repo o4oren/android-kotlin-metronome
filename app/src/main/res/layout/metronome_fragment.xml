@@ -11,22 +11,19 @@
         android:id="@+id/bpmText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="85dp"
-        android:layout_marginBottom="31dp"
+        android:layout_marginTop="32dp"
         android:text="TextView"
-        app:layout_constraintBottom_toTopOf="@+id/bpmSeekbar"
-        app:layout_constraintStart_toStartOf="@+id/bpmSeekbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <SeekBar
         android:id="@+id/bpmSeekbar"
         android:layout_width="213dp"
         android:layout_height="32dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="24dp"
         android:max="220"
         android:min="40"
-        app:layout_constraintBottom_toTopOf="@+id/playButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bpmText" />
@@ -35,9 +32,8 @@
         android:id="@+id/playButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="487dp"
+        android:layout_marginTop="32dp"
         android:src="@android:drawable/ic_media_play"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/bpmSeekbar"
         app:layout_constraintTop_toBottomOf="@+id/bpmSeekbar" />
 
@@ -45,7 +41,7 @@
         android:id="@+id/pauseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="23dp"
+        android:layout_marginStart="24dp"
         android:src="@android:drawable/ic_media_pause"
         app:layout_constraintStart_toEndOf="@+id/playButton"
         app:layout_constraintTop_toTopOf="@+id/playButton" />
