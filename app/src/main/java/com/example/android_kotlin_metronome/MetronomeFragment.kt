@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,16 +22,20 @@ class MetronomeFragment : Fragment() {
 
     private var isBound = false
     private var metronomeService: MetronomeService? = null
+    private val TAG = "METRONOME_FRAGMENT"
 
     override fun onCreateView(
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
+        Log.i(TAG, "on create view")
+
         return inflater.inflate(R.layout.metronome_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.i(TAG, "View created")
         activity?.bindService(
             Intent(
                 activity,
@@ -38,12 +43,11 @@ class MetronomeFragment : Fragment() {
             ), mConnection, Context.BIND_AUTO_CREATE
         )
         isBound = true
-
-        bpmText.text = bpmSeekbar.progress.toString()
+        bpmText.text = "${getString(R.string.bpm)} ${bpmSeekbar?.progress}"
 
         bpmSeekbar?.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                bpmText.text = "BPM: $progress"
+                bpmText.text = "${getString(R.string.bpm)} $progress"
                 updateBpm(progress)
             }
 
@@ -62,10 +66,13 @@ class MetronomeFragment : Fragment() {
     private fun play() {
         metronomeService?.play()
         playButton.isEnabled = false
+        pauseButton.isEnabled = true
     }
 
     private fun pause() {
         metronomeService?.pause()
+        playButton.isEnabled = true
+        pauseButton.isEnabled = false
     }
 
     private fun updateBpm(bpm: Int) {
@@ -85,6 +92,8 @@ class MetronomeFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        Log.i(TAG, "On destroy")
+
         if (isBound) {
             // Detach our existing connection.
             activity!!.unbindService(mConnection)

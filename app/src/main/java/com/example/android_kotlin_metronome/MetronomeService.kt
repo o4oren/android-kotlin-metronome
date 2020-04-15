@@ -12,22 +12,23 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 
+/**
+ * The Metronome service is responsible for playing, stoping and timing the ticks.
+ * It is a started AND bound service, so it can persist and survive device rotation, and allow
+ * The fragments to bind keep referencing it.
+ */
 class MetronomeService : Service() {
     private val binder = MetronomeBinder()
     private lateinit var soundPool: SoundPool
     private lateinit var tickJob: Job
     private val TAG = "METRONOME_SERVICE"
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
-    private var interval = 1500
+    private var interval = 600
     private var isPlaying = false
-
-    override fun onBind(intent: Intent): IBinder {
-        return binder
-    }
 
     override fun onCreate() {
         super.onCreate()
-        Log.i(TAG, "Metronome service started")
+        Log.i(TAG, "Metronome service created")
         soundPool = SoundPool.Builder()
             .setMaxStreams(1)
             .setAudioAttributes(
@@ -37,6 +38,20 @@ class MetronomeService : Service() {
             )
             .build()
         soundPool.load(this, R.raw.click, 1);
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.i(TAG, "Metronome service destroyed")
+
+    }
+
+    override fun onBind(intent: Intent): IBinder {
+        return binder
+    }
+
+    override fun onUnbind(intent: Intent?): Boolean {
+        return super.onUnbind(intent)
     }
 
     fun play() {
@@ -53,6 +68,10 @@ class MetronomeService : Service() {
         isPlaying = false
     }
 
+    /**
+     * Accepts bpm value an sets the interval in ms
+     * @param bpm - the bpm value
+     */
     fun setInterval(bpm: Int) {
         interval = 60000 / bpm
     }

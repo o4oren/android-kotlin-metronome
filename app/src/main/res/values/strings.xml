@@ -6,7 +6,6 @@
     <string name="settings_fragment_label">Settings</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
-
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="bpm">BPM</string>
     <string name="play">Play</string>

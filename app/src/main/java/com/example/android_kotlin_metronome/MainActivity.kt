@@ -1,11 +1,7 @@
 package com.example.android_kotlin_metronome
 
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.IBinder
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
@@ -19,23 +15,10 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
-    private lateinit var metronomeService: MetronomeService
-    private var isBound: Boolean = false
 
-    private val connection = object : ServiceConnection {
-
-        override fun onServiceConnected(className: ComponentName, service: IBinder) {
-            val binder = service as MetronomeService.MetronomeBinder
-            metronomeService = binder.getService()
-            isBound = true
-        }
-
-        override fun onServiceDisconnected(arg0: ComponentName) {
-            isBound = false
-        }
-    }
-
-
+    /**
+     * Initialization - create nav, action bar and starting the metronome service
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -43,20 +26,13 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setSupportActionBar(toolbar)
         toolbar?.setupWithNavController(navController, appBarConfiguration)
+        val intent = Intent(this, MetronomeService::class.java)
+        startService(intent)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
-        Intent(this, MetronomeService::class.java).also { intent ->
-            bindService(intent, connection, Context.BIND_AUTO_CREATE)
-        }
         return true
-    }
-
-    override fun onStop() {
-        super.onStop()
-        unbindService(connection)
-        isBound = false
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
