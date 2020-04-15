@@ -1,3 +1,4 @@
+![](https://github.com/o4oren/android-kotlin-metronome/workflows/Android%20CI/badge.svg)
 ## Metronome
 This project is my attempt to build a modern, lightweight and consistent metronome for Android,
 using the Kotlin programming language, and modern Android SDK features.
