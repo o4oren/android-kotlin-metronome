@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimary">#2F2F2F</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
-    <color name="screenBackground">#202020</color>
+    <color name="screenBackground">#0E0C16</color>
+    <color name="metronomeMetal">#2F2F2F</color>
     <color name="digitalText">#FF5722</color>
 </resources>

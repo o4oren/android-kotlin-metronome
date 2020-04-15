@@ -2,58 +2,55 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/stopButton"
+    android:id="@+id/digitalMetronomeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/screenBackground"
+    android:background="@color/metronomeMetal"
     tools:context=".MetronomeFragment">
 
-    <TextView
-        android:id="@+id/bpmText"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/screenLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/segment7_gml"
-        android:textColor="@color/digitalText"
-        android:textSize="@dimen/bpm_digital_text"
-        app:layout_constraintEnd_toEndOf="@+id/bpmSeekbar"
-        app:layout_constraintStart_toEndOf="@+id/bpmLabelText"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="100" />
-
-    <TextView
-        android:id="@+id/bpmLabelText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/press_start_2p"
-        android:text="@string/bpm"
-        android:textColor="@color/digitalText"
-        android:textSize="@dimen/bpm_text"
-        app:layout_constraintStart_toStartOf="@+id/bpmSeekbar"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="@string/bpm" />
-
-    <SeekBar
-        android:id="@+id/bpmSeekbar"
-        android:layout_width="213dp"
-        android:layout_height="32dp"
-        android:layout_marginTop="24dp"
-        android:max="220"
-        android:min="40"
-        android:progress="100"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/screen_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bpmText" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.08">
 
-    <ImageButton
-        android:id="@+id/playButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:src="@android:drawable/ic_media_play"
-        app:layout_constraintStart_toStartOf="@+id/bpmSeekbar"
-        app:layout_constraintTop_toBottomOf="@+id/bpmSeekbar" />
+        <TextView
+            android:id="@+id/bpmText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="@font/segment7_4gml"
+            android:textColor="@color/digitalText"
+            android:textSize="@dimen/bpm_digital_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/bpmLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:fontFamily="@font/press_start_2p"
+            android:text="@string/bpm"
+            android:textColor="@color/digitalText"
+            android:textSize="@dimen/bpm_text"
+            app:layout_constraintBottom_toBottomOf="@+id/bpmText"
+            app:layout_constraintStart_toEndOf="@+id/bpmText"
+            app:layout_constraintTop_toTopOf="@+id/bpmText"
+            tools:text="@string/bpm" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton
         android:id="@+id/pauseButton"
@@ -63,5 +60,26 @@
         android:src="@android:drawable/ic_media_pause"
         app:layout_constraintStart_toEndOf="@+id/playButton"
         app:layout_constraintTop_toTopOf="@+id/playButton" />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:src="@android:drawable/ic_media_play"
+        app:layout_constraintStart_toStartOf="@+id/bpmSeekbar"
+        app:layout_constraintTop_toBottomOf="@+id/bpmSeekbar" />
+
+    <SeekBar
+        android:id="@+id/bpmSeekbar"
+        android:layout_width="213dp"
+        android:layout_height="32dp"
+        android:layout_marginTop="32dp"
+        android:max="220"
+        android:min="40"
+        android:progress="100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/screenLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
