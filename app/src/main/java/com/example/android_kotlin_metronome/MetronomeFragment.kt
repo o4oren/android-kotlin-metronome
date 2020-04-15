@@ -43,11 +43,11 @@ class MetronomeFragment : Fragment() {
             ), mConnection, Context.BIND_AUTO_CREATE
         )
         isBound = true
-        bpmText.text = "${getString(R.string.bpm)} ${bpmSeekbar?.progress}"
+        bpmText.text = "${bpmSeekbar?.progress}"
 
         bpmSeekbar?.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                bpmText.text = "${getString(R.string.bpm)} $progress"
+                bpmText.text = "$progress"
                 updateBpm(progress)
             }
 

@@ -5,6 +5,7 @@
     android:id="@+id/stopButton"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/screenBackground"
     tools:context=".MetronomeFragment">
 
     <TextView
@@ -12,10 +13,26 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:fontFamily="@font/press_start_2p"
+        android:textColor="@color/digitalText"
+        android:textSize="@dimen/bpm_text"
+        app:layout_constraintEnd_toEndOf="@+id/bpmSeekbar"
+        app:layout_constraintStart_toEndOf="@+id/bpmLabelText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="100" />
+
+    <TextView
+        android:id="@+id/bpmLabelText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/press_start_2p"
+        android:text="@string/bpm"
+        android:textColor="@color/digitalText"
+        android:textSize="@dimen/bpm_text"
+        app:layout_constraintStart_toStartOf="@+id/bpmSeekbar"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/bpm" />
 
     <SeekBar
         android:id="@+id/bpmSeekbar"
