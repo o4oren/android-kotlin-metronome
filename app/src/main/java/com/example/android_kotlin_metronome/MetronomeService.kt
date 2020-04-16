@@ -25,6 +25,7 @@ class MetronomeService : Service() {
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
     private var interval = 600
     private var isPlaying = false
+    private val tickListeners = arrayListOf<TickListener>()
 
     override fun onCreate() {
         super.onCreate()
@@ -80,8 +81,20 @@ class MetronomeService : Service() {
         while (isPlaying) {
             Thread.sleep(interval.toLong())
             Log.i(TAG, "Tick")
+            for (t in tickListeners) t.onTick(interval)
             soundPool.play(1, 1f, 1f, 1, 0, 1f)
         }
+    }
+
+    fun addTickListener(tickListener: TickListener) {
+        tickListeners.add(tickListener)
+        Log.i(TAG, "number of listeners ${tickListeners.size}")
+    }
+
+    fun removeTickListener(tickListener: TickListener) {
+        tickListeners.remove(tickListener)
+        Log.i(TAG, "number of listeners ${tickListeners.size}")
+
     }
 
     inner class MetronomeBinder : Binder() {
@@ -89,5 +102,11 @@ class MetronomeService : Service() {
             return this@MetronomeService
         }
     }
+
+    interface TickListener {
+        fun onTick(interval: Int)
+    }
 }
+
+
 

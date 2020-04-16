@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.metronome_fragment.*
 /**
  * Main Metronome app fragment
  */
-class MetronomeFragment : Fragment() {
+class MetronomeFragment : Fragment(), MetronomeService.TickListener {
 
     private var isBound = false
     private var metronomeService: MetronomeService? = null
@@ -60,7 +60,6 @@ class MetronomeFragment : Fragment() {
 
         playButton.setOnClickListener() { play() }
         pauseButton.setOnClickListener() { pause() }
-
     }
 
     private fun play() {
@@ -82,6 +81,7 @@ class MetronomeFragment : Fragment() {
     private val mConnection: ServiceConnection = object : ServiceConnection {
         override fun onServiceConnected(className: ComponentName, service: IBinder) {
             metronomeService = (service as MetronomeService.MetronomeBinder).getService()
+            metronomeService?.addTickListener(this@MetronomeFragment)
         }
 
         override fun onServiceDisconnected(className: ComponentName) {
@@ -95,9 +95,14 @@ class MetronomeFragment : Fragment() {
         Log.i(TAG, "On destroy")
 
         if (isBound) {
+            metronomeService?.removeTickListener(this)
             // Detach our existing connection.
             activity!!.unbindService(mConnection)
             isBound = false
         }
+    }
+
+    override fun onTick(interval: Int) {
+        TODO("Not yet implemented")
     }
 }
