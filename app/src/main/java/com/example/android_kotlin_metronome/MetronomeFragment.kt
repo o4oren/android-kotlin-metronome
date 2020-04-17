@@ -61,13 +61,13 @@ class MetronomeFragment : Fragment(), MetronomeService.TickListener {
         playButton.setOnClickListener() { play() }
         pauseButton.setOnClickListener() { pause() }
         rhythmButton.setOnClickListener() { nextRhythm() }
-        soundButton.setOnClickListener() { nextSound() }
+        toneButton.setOnClickListener() { nextTone() }
     }
 
-    private fun nextSound() {
-        val sound = metronomeService?.nextSound()
-        Log.i("tet", sound?.name)
-        soundText.text = sound?.name
+    private fun nextTone() {
+        val tone = metronomeService?.nextTone()
+        Log.i("tet", tone?.name)
+        toneText.text = tone?.name
     }
 
 

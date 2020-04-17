@@ -27,7 +27,7 @@ class MetronomeService : Service() {
     private var interval = 600
     private var isPlaying = false
     private val tickListeners = arrayListOf<TickListener>()
-    private var sound = Sound.WOOD
+    private var tone = Tone.WOOD
     private var rhythm = Rhythm.QUARTER
 
     override fun onCreate() {
@@ -92,10 +92,10 @@ class MetronomeService : Service() {
     /**
      * Rotates to the next sound
      */
-    fun nextSound() : Sound{
-        sound = sound.next()
+    fun nextTone() : Tone{
+        tone = tone.next()
         setInterval(bpm)
-        return sound
+        return tone
     }
 
     private suspend fun startTicking() {
@@ -103,7 +103,7 @@ class MetronomeService : Service() {
             Thread.sleep(interval.toLong())
             Log.i(TAG, "Tick")
             for (t in tickListeners) t.onTick(interval)
-            soundPool.play(sound.value, 1f, 1f, 1, 0, 1f)
+            soundPool.play(tone.value, 1f, 1f, 1, 0, 1f)
         }
     }
 
@@ -123,18 +123,18 @@ class MetronomeService : Service() {
         }
     }
 
-    enum class Sound(val value: Int) {
+    enum class Tone(val value: Int) {
         WOOD(1),
         CLICK(2),
         DING(3),
         BEEP(4);
 
         companion object {
-            private val values = Sound.values()
+            private val values = Tone.values()
         }
 
-        fun next(): Sound {
-            return Sound.values()[(this.ordinal+1) % values.size]
+        fun next(): Tone {
+            return Tone.values()[(this.ordinal+1) % values.size]
         }
     }
 

@@ -10,7 +10,7 @@
     <string name="bpm">BPM</string>
     <string name="tempo">TEMPO</string>
     <string name="rhythm">RHYTHM</string>
-    <string name="sound">SOUND</string>
+    <string name="tone">TONE</string>
     <string name="beat">BEAT</string>
     <string name="play">Play</string>
     <string name="stop">Stop</string>
