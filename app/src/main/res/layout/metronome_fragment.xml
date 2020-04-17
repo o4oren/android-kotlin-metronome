@@ -38,6 +38,23 @@
             tools:text="100" />
 
         <TextView
+            android:id="@+id/soundText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="@font/press_start_2p"
+            android:text="@string/wood"
+            android:textColor="@color/digitalText"
+            android:textSize="@dimen/sound_digital_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/rhythmImage"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
+            tools:text="@string/wood" />
+
+        <TextView
             android:id="@+id/tempoLabelText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,6 +77,18 @@
             android:textSize="@dimen/screen_label_text_size"
             app:layout_constraintEnd_toEndOf="@+id/rhythmImage"
             app:layout_constraintStart_toStartOf="@+id/rhythmImage"
+            app:layout_constraintTop_toTopOf="@+id/tempoLabelText" />
+
+        <TextView
+            android:id="@+id/soundLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aldrich"
+            android:text="@string/sound"
+            android:textColor="@color/digitalText"
+            android:textSize="@dimen/screen_label_text_size"
+            app:layout_constraintEnd_toEndOf="@+id/soundText"
+            app:layout_constraintStart_toStartOf="@+id/soundText"
             app:layout_constraintTop_toTopOf="@+id/tempoLabelText" />
 
         <ImageView
@@ -114,5 +143,14 @@
         app:layout_constraintBottom_toBottomOf="@+id/pauseButton"
         app:layout_constraintStart_toEndOf="@+id/pauseButton"
         app:layout_constraintTop_toTopOf="@+id/pauseButton" />
+
+    <Button
+        android:id="@+id/soundButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/sound"
+        app:layout_constraintStart_toStartOf="@+id/playButton"
+        app:layout_constraintTop_toBottomOf="@+id/playButton" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

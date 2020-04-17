@@ -30,7 +30,6 @@ class MetronomeFragment : Fragment(), MetronomeService.TickListener {
         savedInstanceState: Bundle?
     ): View? {
         Log.i(TAG, "on create view")
-
         return inflater.inflate(R.layout.metronome_fragment, container, false)
     }
 
@@ -61,10 +60,18 @@ class MetronomeFragment : Fragment(), MetronomeService.TickListener {
 
         playButton.setOnClickListener() { play() }
         pauseButton.setOnClickListener() { pause() }
-        rhythmButton.setOnClickListener() { setRhythm() }
+        rhythmButton.setOnClickListener() { nextRhythm() }
+        soundButton.setOnClickListener() { nextSound() }
     }
 
-    private fun setRhythm() {
+    private fun nextSound() {
+        val sound = metronomeService?.nextSound()
+        Log.i("tet", sound?.name)
+        soundText.text = sound?.name
+    }
+
+
+    private fun nextRhythm() {
         val rhythm = metronomeService?.nextRhythm()
         val drawable = when (rhythm) {
             MetronomeService.Rhythm.QUARTER -> R.drawable.ic_quarter_note

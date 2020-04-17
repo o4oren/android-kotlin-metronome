@@ -89,6 +89,15 @@ class MetronomeService : Service() {
         return rhythm
     }
 
+    /**
+     * Rotates to the next sound
+     */
+    fun nextSound() : Sound{
+        sound = sound.next()
+        setInterval(bpm)
+        return sound
+    }
+
     private suspend fun startTicking() {
         while (isPlaying) {
             Thread.sleep(interval.toLong())
@@ -118,7 +127,15 @@ class MetronomeService : Service() {
         WOOD(1),
         CLICK(2),
         DING(3),
-        BEEP(4)
+        BEEP(4);
+
+        companion object {
+            private val values = Sound.values()
+        }
+
+        fun next(): Sound {
+            return Sound.values()[(this.ordinal+1) % values.size]
+        }
     }
 
     enum class Rhythm(val value: Int) {
