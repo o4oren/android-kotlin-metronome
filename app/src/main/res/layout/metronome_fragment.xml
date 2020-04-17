@@ -58,12 +58,12 @@
             android:text="@string/rhythm"
             android:textColor="@color/digitalText"
             android:textSize="@dimen/screen_label_text_size"
-            app:layout_constraintEnd_toEndOf="@+id/imageView"
-            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintEnd_toEndOf="@+id/rhythmImage"
+            app:layout_constraintStart_toStartOf="@+id/rhythmImage"
             app:layout_constraintTop_toTopOf="@+id/tempoLabelText" />
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/rhythmImage"
             android:layout_width="47dp"
             android:layout_height="39dp"
             android:layout_marginStart="64dp"
@@ -105,7 +105,7 @@
         app:layout_constraintTop_toBottomOf="@+id/screenLayout" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/rhythmButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"

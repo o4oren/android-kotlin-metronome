@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.metronome_fragment.*
 
@@ -25,8 +26,8 @@ class MetronomeFragment : Fragment(), MetronomeService.TickListener {
     private val TAG = "METRONOME_FRAGMENT"
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         Log.i(TAG, "on create view")
 
@@ -45,7 +46,7 @@ class MetronomeFragment : Fragment(), MetronomeService.TickListener {
         isBound = true
         bpmText.text = "${bpmSeekbar?.progress}"
 
-        bpmSeekbar?.setOnSeekBarChangeListener(object: SeekBar.OnSeekBarChangeListener{
+        bpmSeekbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 bpmText.text = "$progress"
                 updateBpm(progress)
@@ -60,6 +61,20 @@ class MetronomeFragment : Fragment(), MetronomeService.TickListener {
 
         playButton.setOnClickListener() { play() }
         pauseButton.setOnClickListener() { pause() }
+        rhythmButton.setOnClickListener() { setRhythm() }
+    }
+
+    private fun setRhythm() {
+        val rhythm = metronomeService?.nextRhythm()
+        val drawable = if (rhythm == MetronomeService.Rhythm.QUARTER)
+            R.drawable.ic_quarter_note
+        else R.drawable.ic_eighth_note
+        rhythmImage.setImageDrawable(
+            activity?.applicationContext?.let {
+                ContextCompat.getDrawable(
+                    it, drawable
+                )
+            })
     }
 
     private fun play() {

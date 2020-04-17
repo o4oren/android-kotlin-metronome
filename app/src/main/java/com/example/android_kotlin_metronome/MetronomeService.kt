@@ -20,13 +20,14 @@ import kotlinx.coroutines.launch
 class MetronomeService : Service() {
     private val binder = MetronomeBinder()
     private lateinit var soundPool: SoundPool
-    private lateinit var tickJob: Job
+    private var tickJob: Job? = null
     private val TAG = "METRONOME_SERVICE"
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
     private var interval = 600
     private var isPlaying = false
     private val tickListeners = arrayListOf<TickListener>()
     private var sound = Sound.WOOD
+    private var rhythm = Rhythm.QUARTER
 
     override fun onCreate() {
         super.onCreate()
@@ -55,10 +56,6 @@ class MetronomeService : Service() {
         return binder
     }
 
-    override fun onUnbind(intent: Intent?): Boolean {
-        return super.onUnbind(intent)
-    }
-
     fun play() {
         if(!isPlaying) {
             tickJob = coroutineScope.launch(Dispatchers.Default) {
@@ -69,7 +66,7 @@ class MetronomeService : Service() {
     }
 
     fun pause() {
-        tickJob.cancel()
+        tickJob?.cancel()
         isPlaying = false
     }
 
@@ -78,7 +75,22 @@ class MetronomeService : Service() {
      * @param bpm - the bpm value
      */
     fun setInterval(bpm: Int) {
-        interval = 60000 / bpm
+        interval = 60000 / (bpm * rhythm.value)
+    }
+
+    /**
+     * Rotates to the next rhythm
+     */
+    fun nextRhythm() : Rhythm{
+        if (rhythm == Rhythm.QUARTER) {
+            rhythm = Rhythm.EIGHTH
+            interval /= 2
+        }
+        else if (rhythm==Rhythm.EIGHTH) {
+            rhythm = Rhythm.QUARTER
+            interval *= 2
+        }
+        return rhythm
     }
 
     private suspend fun startTicking() {
@@ -111,6 +123,12 @@ class MetronomeService : Service() {
         CLICK(2),
         DING(3),
         BEEP(4)
+    }
+
+    enum class Rhythm(val value: Int) {
+        QUARTER(1),
+        EIGHTH(2),
+        SIXTEENTH(4)
     }
 
     interface TickListener {
