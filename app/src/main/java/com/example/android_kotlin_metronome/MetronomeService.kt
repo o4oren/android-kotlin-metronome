@@ -23,6 +23,7 @@ class MetronomeService : Service() {
     private var tickJob: Job? = null
     private val TAG = "METRONOME_SERVICE"
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
+    private var bpm = 100
     private var interval = 600
     private var isPlaying = false
     private val tickListeners = arrayListOf<TickListener>()
@@ -75,6 +76,7 @@ class MetronomeService : Service() {
      * @param bpm - the bpm value
      */
     fun setInterval(bpm: Int) {
+        this.bpm = bpm
         interval = 60000 / (bpm * rhythm.value)
     }
 
@@ -82,14 +84,8 @@ class MetronomeService : Service() {
      * Rotates to the next rhythm
      */
     fun nextRhythm() : Rhythm{
-        if (rhythm == Rhythm.QUARTER) {
-            rhythm = Rhythm.EIGHTH
-            interval /= 2
-        }
-        else if (rhythm==Rhythm.EIGHTH) {
-            rhythm = Rhythm.QUARTER
-            interval *= 2
-        }
+        rhythm = rhythm.next()
+        setInterval(bpm)
         return rhythm
     }
 
@@ -128,7 +124,15 @@ class MetronomeService : Service() {
     enum class Rhythm(val value: Int) {
         QUARTER(1),
         EIGHTH(2),
-        SIXTEENTH(4)
+        SIXTEENTH(4);
+
+        companion object {
+            private val values = Rhythm.values()
+        }
+
+        fun next(): Rhythm {
+            return Rhythm.values()[(this.ordinal+1) % values.size]
+        }
     }
 
     interface TickListener {

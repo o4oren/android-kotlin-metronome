@@ -66,9 +66,13 @@ class MetronomeFragment : Fragment(), MetronomeService.TickListener {
 
     private fun setRhythm() {
         val rhythm = metronomeService?.nextRhythm()
-        val drawable = if (rhythm == MetronomeService.Rhythm.QUARTER)
-            R.drawable.ic_quarter_note
-        else R.drawable.ic_eighth_note
+        val drawable = when (rhythm) {
+            MetronomeService.Rhythm.QUARTER -> R.drawable.ic_quarter_note
+            MetronomeService.Rhythm.EIGHTH -> R.drawable.ic_eighth_note
+            MetronomeService.Rhythm.SIXTEENTH -> R.drawable.ic_sixteenth_note
+            null -> R.drawable.ic_quarter_note
+        }
+
         rhythmImage.setImageDrawable(
             activity?.applicationContext?.let {
                 ContextCompat.getDrawable(
