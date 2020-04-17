@@ -26,6 +26,7 @@ class MetronomeService : Service() {
     private var interval = 600
     private var isPlaying = false
     private val tickListeners = arrayListOf<TickListener>()
+    private var sound = Sound.WOOD
 
     override fun onCreate() {
         super.onCreate()
@@ -38,7 +39,10 @@ class MetronomeService : Service() {
                     .build()
             )
             .build()
+        soundPool.load(this, R.raw.wood, 1);
         soundPool.load(this, R.raw.click, 1);
+        soundPool.load(this, R.raw.ding, 1);
+        soundPool.load(this, R.raw.beep, 1);
     }
 
     override fun onDestroy() {
@@ -82,7 +86,7 @@ class MetronomeService : Service() {
             Thread.sleep(interval.toLong())
             Log.i(TAG, "Tick")
             for (t in tickListeners) t.onTick(interval)
-            soundPool.play(1, 1f, 1f, 1, 0, 1f)
+            soundPool.play(sound.value, 1f, 1f, 1, 0, 1f)
         }
     }
 
@@ -94,13 +98,19 @@ class MetronomeService : Service() {
     fun removeTickListener(tickListener: TickListener) {
         tickListeners.remove(tickListener)
         Log.i(TAG, "number of listeners ${tickListeners.size}")
-
     }
 
     inner class MetronomeBinder : Binder() {
         fun getService() : MetronomeService {
             return this@MetronomeService
         }
+    }
+
+    enum class Sound(val value: Int) {
+        WOOD(1),
+        CLICK(2),
+        DING(3),
+        BEEP(4)
     }
 
     interface TickListener {

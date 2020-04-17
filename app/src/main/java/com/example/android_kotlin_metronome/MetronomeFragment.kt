@@ -103,6 +103,6 @@ class MetronomeFragment : Fragment(), MetronomeService.TickListener {
     }
 
     override fun onTick(interval: Int) {
-        TODO("Not yet implemented")
+//        TODO("Not yet implemented")
     }
 }
