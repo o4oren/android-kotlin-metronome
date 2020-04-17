@@ -104,4 +104,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/screenLayout" />
 
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:cropToPadding="false"
+        android:src="@drawable/ic_quarter_note_white"
+        app:layout_constraintBottom_toBottomOf="@+id/pauseButton"
+        app:layout_constraintStart_toEndOf="@+id/pauseButton"
+        app:layout_constraintTop_toTopOf="@+id/pauseButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
