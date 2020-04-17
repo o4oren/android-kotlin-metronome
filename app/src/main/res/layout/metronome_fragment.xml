@@ -17,9 +17,10 @@
         android:background="@drawable/screen_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.08">
+        app:layout_constraintVertical_bias="0.120000005">
 
         <TextView
             android:id="@+id/bpmText"
@@ -37,18 +38,39 @@
             tools:text="100" />
 
         <TextView
-            android:id="@+id/bpmLabelText"
+            android:id="@+id/tempoLabelText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:fontFamily="@font/press_start_2p"
-            android:text="@string/bpm"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/aldrich"
+            android:text="@string/tempo"
             android:textColor="@color/digitalText"
-            android:textSize="@dimen/bpm_text"
+            android:textSize="@dimen/screen_label_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/bpmText"
+            app:layout_constraintEnd_toEndOf="@+id/bpmText"
+            app:layout_constraintStart_toStartOf="@+id/bpmText" />
+
+        <TextView
+            android:id="@+id/rhythmLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aldrich"
+            android:text="@string/rhythm"
+            android:textColor="@color/digitalText"
+            android:textSize="@dimen/screen_label_text_size"
+            app:layout_constraintEnd_toEndOf="@+id/imageView"
+            app:layout_constraintStart_toStartOf="@+id/imageView"
+            app:layout_constraintTop_toTopOf="@+id/tempoLabelText" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="47dp"
+            android:layout_height="39dp"
+            android:layout_marginStart="64dp"
+            android:src="@drawable/ic_quarter_note"
             app:layout_constraintBottom_toBottomOf="@+id/bpmText"
             app:layout_constraintStart_toEndOf="@+id/bpmText"
-            app:layout_constraintTop_toTopOf="@+id/bpmText"
-            tools:text="@string/bpm" />
+            app:layout_constraintTop_toTopOf="@+id/bpmText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

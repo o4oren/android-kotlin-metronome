@@ -1,6 +1,6 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="bpm_text">16sp</dimen>
+    <dimen name="screen_label_text_size">12sp</dimen>
     <dimen name="bpm_digital_text">32sp</dimen>
 
 </resources>
