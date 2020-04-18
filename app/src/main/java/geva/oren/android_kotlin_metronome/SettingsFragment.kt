@@ -1,4 +1,4 @@
-package com.example.android_kotlin_metronome
+package geva.oren.android_kotlin_metronome
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import geva.oren.android_kotlin_metronome.R
 
 /**
  * A fragment containing various configuration settings

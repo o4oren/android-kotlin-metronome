@@ -1,4 +1,4 @@
-package com.example.android_kotlin_metronome
+package geva.oren.android_kotlin_metronome
 
 import org.junit.Test
 

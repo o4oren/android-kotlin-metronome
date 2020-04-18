@@ -1,4 +1,4 @@
-package com.example.android_kotlin_metronome.views
+package geva.oren.android_kotlin_metronome.views
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,8 +7,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
-import com.example.android_kotlin_metronome.MetronomeService
-import com.example.android_kotlin_metronome.R
+import geva.oren.android_kotlin_metronome.MetronomeService
+import geva.oren.android_kotlin_metronome.R
 
 class TonesView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0

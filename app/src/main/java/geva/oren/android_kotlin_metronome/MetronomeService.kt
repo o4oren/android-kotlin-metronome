@@ -1,4 +1,4 @@
-package com.example.android_kotlin_metronome
+package geva.oren.android_kotlin_metronome
 
 import android.app.Service
 import android.content.Intent
@@ -83,7 +83,7 @@ class MetronomeService : Service() {
     /**
      * Rotates to the next rhythm
      */
-    fun nextRhythm() : Rhythm{
+    fun nextRhythm() : Rhythm {
         rhythm = rhythm.next()
         setInterval(bpm)
         return rhythm
