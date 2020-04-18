@@ -25,6 +25,7 @@ class MetronomeService : Service() {
     private val TAG = "METRONOME_SERVICE"
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
     private var bpm = 100
+    private var beatsPerMeasure = 4
     private var interval = 600
     private var isPlaying = false
     private val tickListeners = arrayListOf<TickListener>()
@@ -32,6 +33,7 @@ class MetronomeService : Service() {
         Tone.WOOD
     private var rhythm =
         Rhythm.QUARTER
+    var emphasis = true
 
     override fun onCreate() {
         super.onCreate()
@@ -53,7 +55,6 @@ class MetronomeService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         Log.i(TAG, "Metronome service destroyed")
-
     }
 
     override fun onBind(intent: Intent): IBinder {
@@ -61,7 +62,7 @@ class MetronomeService : Service() {
     }
 
     fun play() {
-        if(!isPlaying) {
+        if (!isPlaying) {
             tickJob = coroutineScope.launch(Dispatchers.Default) {
                 isPlaying = true
                 startTicking()
@@ -70,8 +71,8 @@ class MetronomeService : Service() {
     }
 
     fun pause() {
-        tickJob?.cancel()
         isPlaying = false
+        tickJob?.cancel()
     }
 
     /**
@@ -84,9 +85,16 @@ class MetronomeService : Service() {
     }
 
     /**
+     * Toggle emphasis on/off
+     */
+    fun toggleEmphasis() {
+        emphasis = !emphasis
+    }
+
+    /**
      * Rotates to the next rhythm
      */
-    fun nextRhythm() : Rhythm {
+    fun nextRhythm(): Rhythm {
         rhythm = rhythm.next()
         setInterval(bpm)
         return rhythm
@@ -95,18 +103,27 @@ class MetronomeService : Service() {
     /**
      * Rotates to the next sound
      */
-    fun nextTone() : Tone {
+    fun nextTone(): Tone {
         tone = tone.next()
         setInterval(bpm)
         return tone
     }
 
     private suspend fun startTicking() {
+        var beat = 0
+
         while (isPlaying) {
             Thread.sleep(interval.toLong())
-            Log.i(TAG, "Tick")
-            for (t in tickListeners) t.onTick(interval)
-            soundPool.play(tone.value, 1f, 1f, 1, 0, 1f)
+            if (beat % rhythm.value == 0) {
+                for (t in tickListeners) t.onTick(interval)
+            }
+            val rate = if (emphasis && beat % beatsPerMeasure == 0)  1.4f else 1.0f
+            soundPool.play(tone.value, 1f, 1f, 1, 0, rate)
+            if (beat < beatsPerMeasure - 1)
+                beat++
+            else
+                beat = 0
+            Log.i(TAG, beat.toString())
         }
     }
 
@@ -121,7 +138,7 @@ class MetronomeService : Service() {
     }
 
     inner class MetronomeBinder : Binder() {
-        fun getService() : MetronomeService {
+        fun getService(): MetronomeService {
             return this@MetronomeService
         }
     }
@@ -137,7 +154,7 @@ class MetronomeService : Service() {
         }
 
         fun next(): Tone {
-            return Tone.values()[(this.ordinal+1) % values.size]
+            return Tone.values()[(this.ordinal + 1) % values.size]
         }
     }
 
@@ -151,7 +168,7 @@ class MetronomeService : Service() {
         }
 
         fun next(): Rhythm {
-            return Rhythm.values()[(this.ordinal+1) % values.size]
+            return Rhythm.values()[(this.ordinal + 1) % values.size]
         }
     }
 

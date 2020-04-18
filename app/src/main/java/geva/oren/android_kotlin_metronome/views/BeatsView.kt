@@ -48,6 +48,12 @@ class BeatsView @JvmOverloads constructor(
         }
     }
 
+    fun resetBeats() {
+        highlightedBeat = -1
+        removeAllViews()
+        createBeats()
+    }
+
     fun inc(): Int {
         if (beats < 10)
             beats++
