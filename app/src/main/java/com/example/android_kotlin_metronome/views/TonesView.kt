@@ -13,10 +13,11 @@ import com.example.android_kotlin_metronome.R
 class TonesView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
-    val offColor = ContextCompat.getColor(context,
+
+    private val offColor = ContextCompat.getColor(context,
         R.color.faintDigitalText
     )
-    val onColor = ContextCompat.getColor(context,
+    private val onColor = ContextCompat.getColor(context,
         R.color.digitalText
     )
 
