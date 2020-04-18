@@ -8,6 +8,7 @@
     <string name="previous">Previous</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="bpm">BPM</string>
+    <string name="eights">888</string>
     <string name="tempo">TEMPO</string>
     <string name="rhythm">RHYTHM</string>
     <string name="tone">TONE</string>

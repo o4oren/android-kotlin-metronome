@@ -46,11 +46,12 @@ class MetronomeFragment : Fragment(),
             ), mConnection, Context.BIND_AUTO_CREATE
         )
         isBound = true
-        bpmText.text = "${bpmSeekbar?.progress}"
+        if (bpmSeekbar != null)
+            setBpmText(bpmSeekbar.progress)
 
         bpmSeekbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                bpmText.text = "$progress"
+                setBpmText(progress)
                 updateBpm(progress)
             }
 
@@ -65,6 +66,12 @@ class MetronomeFragment : Fragment(),
         pauseButton.setOnClickListener() { pause() }
         rhythmButton.setOnClickListener() { nextRhythm() }
         toneButton.setOnClickListener() { nextTone() }
+    }
+
+    private fun setBpmText(bpm: Int) {
+        if (bpm != null) {
+            bpmText.text = if (bpm >= 100) bpm.toString() else " ${bpm.toString()}"
+        }
     }
 
     private fun nextTone() {
