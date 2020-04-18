@@ -46,7 +46,6 @@ class BeatsView @JvmOverloads constructor(
             val currentBeat = getChildAt(highlightedBeat) as ImageView
             currentBeat.setImageDrawable(fullCircle)
         }
-
     }
 
     fun inc(): Int {
