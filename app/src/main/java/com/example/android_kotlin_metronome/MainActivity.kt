@@ -34,10 +34,4 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.menu_main, menu)
         return true
     }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return return item.onNavDestinationSelected(navController) || super.onOptionsItemSelected(
-            item
-        )
-    }
 }

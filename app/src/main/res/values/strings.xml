@@ -15,4 +15,7 @@
     <string name="play">Play</string>
     <string name="stop">Stop</string>
     <string name="wood">WOOD</string>
+    <string name="click">CLICK</string>
+    <string name="ding">DING</string>
+    <string name="beep">BEEP</string>
 </resources>

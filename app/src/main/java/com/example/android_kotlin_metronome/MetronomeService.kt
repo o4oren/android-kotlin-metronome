@@ -92,7 +92,7 @@ class MetronomeService : Service() {
     /**
      * Rotates to the next sound
      */
-    fun nextTone() : Tone{
+    fun nextTone() : Tone {
         tone = tone.next()
         setInterval(bpm)
         return tone

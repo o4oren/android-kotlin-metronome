@@ -66,8 +66,9 @@ class MetronomeFragment : Fragment(), MetronomeService.TickListener {
 
     private fun nextTone() {
         val tone = metronomeService?.nextTone()
-        Log.i("tet", tone?.name)
-        toneText.text = tone?.name
+        if (tone != null) {
+            tonesView.selectTone(tone)
+        }
     }
 
 
