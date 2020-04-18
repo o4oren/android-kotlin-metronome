@@ -1,4 +1,4 @@
-package geva.oren.android_kotlin_metronome
+package geva.oren.android_kotlin_metronome.services
 
 import android.app.Service
 import android.content.Intent
@@ -7,6 +7,7 @@ import android.media.SoundPool
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
+import geva.oren.android_kotlin_metronome.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -27,8 +28,10 @@ class MetronomeService : Service() {
     private var interval = 600
     private var isPlaying = false
     private val tickListeners = arrayListOf<TickListener>()
-    private var tone = Tone.WOOD
-    private var rhythm = Rhythm.QUARTER
+    private var tone =
+        Tone.WOOD
+    private var rhythm =
+        Rhythm.QUARTER
 
     override fun onCreate() {
         super.onCreate()

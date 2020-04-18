@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/MetronomeFragment"
-        android:name="geva.oren.android_kotlin_metronome.MetronomeFragment"
+        android:name="geva.oren.android_kotlin_metronome.fragments.MetronomeFragment"
         android:label="@string/metronome_fragment_label"
         tools:layout="@layout/metronome_fragment">
 
@@ -17,7 +17,7 @@
     </fragment>
     <fragment
         android:id="@+id/settings_fragment"
-        android:name="geva.oren.android_kotlin_metronome.MetronomeFragment"
+        android:name="geva.oren.android_kotlin_metronome.fragments.MetronomeFragment"
         android:label="@string/settings_fragment_label"
         tools:layout="@layout/settings_fragment">
 

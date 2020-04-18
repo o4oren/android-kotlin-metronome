@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
-            android:name="geva.oren.android_kotlin_metronome.MetronomeService"
+            android:name="geva.oren.android_kotlin_metronome.services.MetronomeService"
             android:enabled="true"
             android:exported="false"></service>
 

@@ -1,4 +1,4 @@
-package geva.oren.android_kotlin_metronome
+package geva.oren.android_kotlin_metronome.fragments
 
 import android.content.ComponentName
 import android.content.Context
@@ -13,13 +13,16 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import geva.oren.android_kotlin_metronome.services.MetronomeService
+import geva.oren.android_kotlin_metronome.R
 import kotlinx.android.synthetic.main.metronome_fragment.*
 
 
 /**
  * Main Metronome app fragment
  */
-class MetronomeFragment : Fragment(), MetronomeService.TickListener {
+class MetronomeFragment : Fragment(),
+    MetronomeService.TickListener {
 
     private var isBound = false
     private var metronomeService: MetronomeService? = null

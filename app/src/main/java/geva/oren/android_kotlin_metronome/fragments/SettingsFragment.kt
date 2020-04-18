@@ -1,4 +1,4 @@
-package geva.oren.android_kotlin_metronome
+package geva.oren.android_kotlin_metronome.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

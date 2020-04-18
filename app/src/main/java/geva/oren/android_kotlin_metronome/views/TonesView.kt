@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.core.view.children
-import geva.oren.android_kotlin_metronome.MetronomeService
+import geva.oren.android_kotlin_metronome.services.MetronomeService
 import geva.oren.android_kotlin_metronome.R
 
 class TonesView @JvmOverloads constructor(
