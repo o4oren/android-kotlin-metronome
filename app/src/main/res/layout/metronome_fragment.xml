@@ -27,7 +27,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
-            android:layout_marginTop="32dp"
             android:layout_marginBottom="32dp"
             android:fontFamily="@font/segment7_4gml"
             android:textColor="@color/digitalText"
@@ -81,6 +80,18 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/rhythmImage"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <view
+            android:id="@+id/view"
+            class="geva.oren.android_kotlin_metronome.views.BeatsView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/bpmText"
+            app:layout_constraintStart_toStartOf="@+id/bpmText"
+            app:layout_constraintTop_toBottomOf="@+id/bpmText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
