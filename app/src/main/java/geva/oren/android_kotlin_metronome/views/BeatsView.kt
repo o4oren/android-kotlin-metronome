@@ -12,6 +12,7 @@ class BeatsView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     var beats = 4
+    var highlightedBeat = 0
     val emptyCircle = ContextCompat.getDrawable(context, R.drawable.beat_circle_empty)
     val fullCircle = ContextCompat.getDrawable(context, R.drawable.beat_circle_full)
     var marginParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -25,11 +26,20 @@ class BeatsView @JvmOverloads constructor(
     private fun createBeats() {
         for (i in 0 until beats) {
             var imageView = ImageView(context)
-            val drawableToSet = if (i==0) fullCircle else emptyCircle
-            imageView.setImageDrawable(drawableToSet)
+            imageView.setImageDrawable(emptyCircle)
             imageView.layoutParams = marginParams
             addView(imageView)
         }
+    }
+
+    fun nextBeat() {
+        val prevBeat = getChildAt(highlightedBeat) as ImageView
+        if (highlightedBeat == beats - 1)
+            highlightedBeat = 0
+        else highlightedBeat++
+        val currentBeat = getChildAt(highlightedBeat) as ImageView
+        prevBeat.setImageDrawable(emptyCircle)
+        currentBeat.setImageDrawable(fullCircle)
     }
 
     fun inc(): Int {
