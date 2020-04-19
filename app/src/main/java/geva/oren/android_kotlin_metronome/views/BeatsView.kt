@@ -22,9 +22,13 @@ class BeatsView @JvmOverloads constructor(
             createBeats()
         }
     var isEmphasis = true
+    set(isEmphasis: Boolean) {
+        field = isEmphasis
+        resetBeats(false)
+    }
     private var highlightedBeat = -1
     private val firstEmptyCircle =
-        ContextCompat.getDrawable(context, R.drawable.first_beat_circle_empty_no_emphasis)
+        ContextCompat.getDrawable(context, R.drawable.first_beat_circle_empty)
     private val firstFullCircle =
         ContextCompat.getDrawable(context, R.drawable.first_beat_circle_full)
     private val firstEmptyCircleNoEmphasis =
@@ -46,20 +50,11 @@ class BeatsView @JvmOverloads constructor(
     private fun createBeats() {
         for (i in 0 until beats) {
             val imageView = ImageView(context)
-            val drawable = if (i == 0)
-                if (isEmphasis) this.firstEmptyCircle else this.firstEmptyCircleNoEmphasis
-            else
-                emptyCircle
-
+            val drawable = getCircleDrawable(i, false)
             imageView.setImageDrawable(drawable)
             imageView.layoutParams = marginParams
             addView(imageView)
         }
-    }
-
-    private fun getDrawable(beat: Int): Drawable? {
-
-        return this.emptyCircle
     }
 
     fun nextBeat() {
@@ -69,19 +64,35 @@ class BeatsView @JvmOverloads constructor(
                 highlightedBeat = 0
             else highlightedBeat++
             val currentBeat = getChildAt(highlightedBeat) as ImageView
-            prevBeat.setImageDrawable(emptyCircle)
-            currentBeat.setImageDrawable(fullCircle)
-            if (highlightedBeat == 0)
-                currentBeat.setImageDrawable(firstFullCircle)
+            if (highlightedBeat == 1) {
+                prevBeat.setImageDrawable(getCircleDrawable(highlightedBeat -1 , false))
+            } else {
+                prevBeat.setImageDrawable(getCircleDrawable(highlightedBeat -1 , false))
+            }
+            currentBeat.setImageDrawable(getCircleDrawable(highlightedBeat, true))
         } else {
             highlightedBeat++
             val currentBeat = getChildAt(highlightedBeat) as ImageView
-            currentBeat.setImageDrawable(fullCircle)
+            currentBeat.setImageDrawable(getCircleDrawable(highlightedBeat, true))
         }
     }
 
-    fun resetBeats() {
-        highlightedBeat = -1
+    private fun getCircleDrawable(beatIndex: Int, isFull: Boolean): Drawable? {
+        return when (beatIndex) {
+            0 -> when (isEmphasis) {
+                true -> if (isFull) firstFullCircle else firstEmptyCircle
+                false -> if (isFull) firstFullCircleNoEmphasis else firstEmptyCircleNoEmphasis
+            }
+            else -> if (isFull) fullCircle else emptyCircle
+        }
+    }
+
+    /**
+     * Resets the beats view
+     * @param resetHighlightedBeat - indicates if the highlighted beat should be reset to zero
+     */
+    fun resetBeats(resetHighlightedBeat: Boolean) {
+        if (resetHighlightedBeat) highlightedBeat = -1
         removeAllViews()
         createBeats()
     }

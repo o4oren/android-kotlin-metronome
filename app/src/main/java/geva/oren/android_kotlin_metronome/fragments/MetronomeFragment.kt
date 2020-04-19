@@ -66,7 +66,10 @@ class MetronomeFragment : Fragment(),
         pauseButton.setOnClickListener() { this.pause() }
         rhythmButton.setOnClickListener() { this.nextRhythm() }
         toneButton.setOnClickListener() { this.nextTone() }
-        emphasisButton.setOnClickListener() {v ->  metronomeService?.toggleEmphasis() }
+        emphasisButton.setOnClickListener() {v ->
+            val isEmphasis = metronomeService?.toggleEmphasis()
+            beatsView.isEmphasis =  isEmphasis!!
+        }
     }
 
     private fun setBpmText(bpm: Int) {
@@ -108,7 +111,7 @@ class MetronomeFragment : Fragment(),
         metronomeService?.pause()
         playButton.isEnabled = true
         pauseButton.isEnabled = false
-        beatsView.resetBeats()
+        beatsView.resetBeats(true)
     }
 
     private fun updateBpm(bpm: Int) {
@@ -141,6 +144,6 @@ class MetronomeFragment : Fragment(),
 
     override fun onTick(interval: Int) {
         if (metronomeService?.isPlaying!!)
-            beatsView.nextBeat()
+            activity?.runOnUiThread() {beatsView.nextBeat()}
     }
 }

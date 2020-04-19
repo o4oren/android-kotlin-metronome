@@ -88,8 +88,9 @@ class MetronomeService : Service() {
     /**
      * Toggle emphasis on/off
      */
-    fun toggleEmphasis() {
+    fun toggleEmphasis(): Boolean {
         emphasis = !emphasis
+        return emphasis
     }
 
     /**
@@ -110,7 +111,7 @@ class MetronomeService : Service() {
         return tone
     }
 
-    private suspend fun tick() {
+    private fun tick() {
         var beat = 0
 
         while (isPlaying) {
