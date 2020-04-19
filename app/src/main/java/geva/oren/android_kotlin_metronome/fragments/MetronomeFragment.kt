@@ -83,7 +83,6 @@ class MetronomeFragment : Fragment(),
         }
     }
 
-
     private fun nextRhythm() {
         val rhythm = metronomeService?.nextRhythm()
         val drawable = when (rhythm) {
@@ -99,6 +98,7 @@ class MetronomeFragment : Fragment(),
                     it, drawable
                 )
             })
+        beatsView.resetBeats(true)
     }
 
     private fun play() {
