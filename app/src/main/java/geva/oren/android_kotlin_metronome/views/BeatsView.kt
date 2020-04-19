@@ -1,7 +1,9 @@
 package geva.oren.android_kotlin_metronome.views
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.view.Gravity
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
@@ -15,17 +17,28 @@ class BeatsView @JvmOverloads constructor(
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     var beats = 4
-    set(beats) {
-        field = beats
-        createBeats()
-    }
+        set(beats) {
+            field = beats
+            createBeats()
+        }
+    var isEmphasis = true
     private var highlightedBeat = -1
+    private val firstEmptyCircle =
+        ContextCompat.getDrawable(context, R.drawable.first_beat_circle_empty_no_emphasis)
+    private val firstFullCircle =
+        ContextCompat.getDrawable(context, R.drawable.first_beat_circle_full)
+    private val firstEmptyCircleNoEmphasis =
+        ContextCompat.getDrawable(context, R.drawable.first_beat_circle_empty_no_emphasis)
+    private val firstFullCircleNoEmphasis =
+        ContextCompat.getDrawable(context, R.drawable.first_beat_circle_full_no_emphasis)
     private val emptyCircle = ContextCompat.getDrawable(context, R.drawable.beat_circle_empty)
     private val fullCircle = ContextCompat.getDrawable(context, R.drawable.beat_circle_full)
     private val marginParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 
     init {
         orientation = HORIZONTAL
+
+        gravity = Gravity.CENTER
         marginParams.setMargins(5, 5, 5, 5)
         createBeats()
     }
@@ -33,10 +46,20 @@ class BeatsView @JvmOverloads constructor(
     private fun createBeats() {
         for (i in 0 until beats) {
             val imageView = ImageView(context)
-            imageView.setImageDrawable(emptyCircle)
+            val drawable = if (i == 0)
+                if (isEmphasis) this.firstEmptyCircle else this.firstEmptyCircleNoEmphasis
+            else
+                emptyCircle
+
+            imageView.setImageDrawable(drawable)
             imageView.layoutParams = marginParams
             addView(imageView)
         }
+    }
+
+    private fun getDrawable(beat: Int): Drawable? {
+
+        return this.emptyCircle
     }
 
     fun nextBeat() {
@@ -48,6 +71,8 @@ class BeatsView @JvmOverloads constructor(
             val currentBeat = getChildAt(highlightedBeat) as ImageView
             prevBeat.setImageDrawable(emptyCircle)
             currentBeat.setImageDrawable(fullCircle)
+            if (highlightedBeat == 0)
+                currentBeat.setImageDrawable(firstFullCircle)
         } else {
             highlightedBeat++
             val currentBeat = getChildAt(highlightedBeat) as ImageView

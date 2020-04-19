@@ -110,7 +110,7 @@ class MetronomeService : Service() {
         return tone
     }
 
-    private fun tick() {
+    private suspend fun tick() {
         var beat = 0
 
         while (isPlaying) {
