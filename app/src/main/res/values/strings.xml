@@ -4,6 +4,8 @@
     <!-- Strings used for fragments for navigation -->
     <string name="metronome_fragment_label">Metronome</string>
     <string name="settings_fragment_label">Settings</string>
+    <string name="notification_title">Metronome</string>
+    <string name="notification_message">Metronome is running...</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>

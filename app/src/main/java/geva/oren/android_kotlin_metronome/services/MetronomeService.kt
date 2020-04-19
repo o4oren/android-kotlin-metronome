@@ -1,14 +1,18 @@
 package geva.oren.android_kotlin_metronome.services
 
-import android.app.Service
+import android.app.*
+import android.content.Context
 import android.content.Intent
 import android.media.AudioAttributes
 import android.media.SoundPool
 import android.os.Binder
 import android.os.IBinder
 import android.util.Log
+import androidx.core.app.NotificationCompat
+import geva.oren.android_kotlin_metronome.MainActivity
 import geva.oren.android_kotlin_metronome.R
 import kotlinx.coroutines.*
+
 
 /**
  * The Metronome service is responsible for playing, stoping and timing the ticks.
@@ -16,10 +20,11 @@ import kotlinx.coroutines.*
  * The fragments to bind keep referencing it.
  */
 class MetronomeService : Service() {
+    private val TAG = "METRONOME_SERVICE"
+    private val CHANNEL_ID = "METRONOME SERVICE"
     private val binder = MetronomeBinder()
     private lateinit var soundPool: SoundPool
     private var tickJob: Job? = null
-    private val tag = "METRONOME_SERVICE"
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
     private var bpm = 100
     private var beatsPerMeasure = 4
@@ -35,7 +40,8 @@ class MetronomeService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.i(tag, "Metronome service created")
+        Log.i(TAG, "Metronome service created")
+        startNotification()
         soundPool = SoundPool.Builder()
             .setMaxStreams(1)
             .setAudioAttributes(
@@ -50,9 +56,30 @@ class MetronomeService : Service() {
         soundPool.load(this, R.raw.beep, 1)
     }
 
+    // Notification for enabling a foreground service
+    private fun startNotification() {
+        val mChannel = NotificationChannel(CHANNEL_ID, CHANNEL_ID, NotificationManager.IMPORTANCE_DEFAULT)
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(mChannel)
+
+        val pendingIntent: PendingIntent =
+            Intent(this, MainActivity::class.java).let { notificationIntent ->
+                PendingIntent.getActivity(this, 0, notificationIntent, 0)
+            }
+
+        val notification: Notification = Notification.Builder(this, CHANNEL_ID)
+            .setContentTitle(getText(R.string.notification_title))
+            .setContentText(getText(R.string.notification_message))
+            .setSmallIcon(R.drawable.ic_eighth_note)
+            .setContentIntent(pendingIntent)
+            .build()
+
+        startForeground(1, notification)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        Log.i(tag, "Metronome service destroyed")
+        Log.i(TAG, "Metronome service destroyed")
     }
 
     override fun onBind(intent: Intent): IBinder {
@@ -108,7 +135,7 @@ class MetronomeService : Service() {
      */
     fun nextRhythm(): Rhythm {
         pause()
-        Log.i(tag, "is not active anymore")
+        Log.i(TAG, "is not active anymore")
         rhythm = rhythm.next()
         setInterval(bpm)
         play()
@@ -126,12 +153,12 @@ class MetronomeService : Service() {
 
     fun addTickListener(tickListener: TickListener) {
         tickListeners.add(tickListener)
-        Log.i(tag, "number of listeners ${tickListeners.size}")
+        Log.i(TAG, "number of listeners ${tickListeners.size}")
     }
 
     fun removeTickListener(tickListener: TickListener) {
         tickListeners.remove(tickListener)
-        Log.i(tag, "number of listeners ${tickListeners.size}")
+        Log.i(TAG, "number of listeners ${tickListeners.size}")
     }
 
     inner class MetronomeBinder : Binder() {
