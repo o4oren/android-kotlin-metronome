@@ -115,13 +115,15 @@ class MetronomeService : Service() {
         var beat = 0
 
         while (isPlaying) {
+            var rate = 1f
             Thread.sleep(interval.toLong())
             if (beat % rhythm.value == 0) {
                 for (t in tickListeners) t.onTick(interval)
+                if (emphasis && beat == 0)
+                    rate = 1.4f
             }
-            val rate = if (emphasis && beat % beatsPerMeasure == 0)  1.4f else 1.0f
             if (isPlaying) soundPool.play(tone.value, 1f, 1f, 1, 0, rate)
-            if (beat < beatsPerMeasure - 1)
+            if (beat < beatsPerMeasure * rhythm.value - 1)
                 beat++
             else
                 beat = 0
