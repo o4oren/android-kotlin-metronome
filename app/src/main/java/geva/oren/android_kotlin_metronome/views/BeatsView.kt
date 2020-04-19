@@ -7,15 +7,22 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import geva.oren.android_kotlin_metronome.R
 
+/**
+ * Displays the beats and active beat dynamically
+ */
 class BeatsView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
     var beats = 4
-    var highlightedBeat = -1
-    val emptyCircle = ContextCompat.getDrawable(context, R.drawable.beat_circle_empty)
-    val fullCircle = ContextCompat.getDrawable(context, R.drawable.beat_circle_full)
-    var marginParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+    set(beats) {
+        field = beats
+        createBeats()
+    }
+    private var highlightedBeat = -1
+    private val emptyCircle = ContextCompat.getDrawable(context, R.drawable.beat_circle_empty)
+    private val fullCircle = ContextCompat.getDrawable(context, R.drawable.beat_circle_full)
+    private val marginParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
 
     init {
         orientation = HORIZONTAL
@@ -25,7 +32,7 @@ class BeatsView @JvmOverloads constructor(
 
     private fun createBeats() {
         for (i in 0 until beats) {
-            var imageView = ImageView(context)
+            val imageView = ImageView(context)
             imageView.setImageDrawable(emptyCircle)
             imageView.layoutParams = marginParams
             addView(imageView)

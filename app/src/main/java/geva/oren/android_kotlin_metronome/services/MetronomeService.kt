@@ -22,7 +22,7 @@ class MetronomeService : Service() {
     private val binder = MetronomeBinder()
     private lateinit var soundPool: SoundPool
     private var tickJob: Job? = null
-    private val TAG = "METRONOME_SERVICE"
+    private val tag = "METRONOME_SERVICE"
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
     private var bpm = 100
     private var beatsPerMeasure = 4
@@ -38,7 +38,7 @@ class MetronomeService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.i(TAG, "Metronome service created")
+        Log.i(tag, "Metronome service created")
         soundPool = SoundPool.Builder()
             .setMaxStreams(1)
             .setAudioAttributes(
@@ -47,15 +47,15 @@ class MetronomeService : Service() {
                     .build()
             )
             .build()
-        soundPool.load(this, R.raw.wood, 1);
-        soundPool.load(this, R.raw.click, 1);
-        soundPool.load(this, R.raw.ding, 1);
-        soundPool.load(this, R.raw.beep, 1);
+        soundPool.load(this, R.raw.wood, 1)
+        soundPool.load(this, R.raw.click, 1)
+        soundPool.load(this, R.raw.ding, 1)
+        soundPool.load(this, R.raw.beep, 1)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i(TAG, "Metronome service destroyed")
+        Log.i(tag, "Metronome service destroyed")
     }
 
     override fun onBind(intent: Intent): IBinder {
@@ -110,7 +110,7 @@ class MetronomeService : Service() {
         return tone
     }
 
-    private suspend fun tick() {
+    private fun tick() {
         var beat = 0
 
         while (isPlaying) {
@@ -129,12 +129,12 @@ class MetronomeService : Service() {
 
     fun addTickListener(tickListener: TickListener) {
         tickListeners.add(tickListener)
-        Log.i(TAG, "number of listeners ${tickListeners.size}")
+        Log.i(tag, "number of listeners ${tickListeners.size}")
     }
 
     fun removeTickListener(tickListener: TickListener) {
         tickListeners.remove(tickListener)
-        Log.i(TAG, "number of listeners ${tickListeners.size}")
+        Log.i(tag, "number of listeners ${tickListeners.size}")
     }
 
     inner class MetronomeBinder : Binder() {
@@ -150,11 +150,11 @@ class MetronomeService : Service() {
         BEEP(4);
 
         companion object {
-            private val values = Tone.values()
+            private val values = values()
         }
 
         fun next(): Tone {
-            return Tone.values()[(this.ordinal + 1) % values.size]
+            return values()[(this.ordinal + 1) % values.size]
         }
     }
 
@@ -164,11 +164,11 @@ class MetronomeService : Service() {
         SIXTEENTH(4);
 
         companion object {
-            private val values = Rhythm.values()
+            private val values = values()
         }
 
         fun next(): Rhythm {
-            return Rhythm.values()[(this.ordinal + 1) % values.size]
+            return values()[(this.ordinal + 1) % values.size]
         }
     }
 

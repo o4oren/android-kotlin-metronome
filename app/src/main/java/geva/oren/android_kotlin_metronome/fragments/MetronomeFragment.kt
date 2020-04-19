@@ -62,17 +62,15 @@ class MetronomeFragment : Fragment(),
             }
         })
 
-        playButton.setOnClickListener() { play() }
-        pauseButton.setOnClickListener() { pause() }
-        rhythmButton.setOnClickListener() { nextRhythm() }
-        toneButton.setOnClickListener() { nextTone() }
+        playButton.setOnClickListener() { this.play() }
+        pauseButton.setOnClickListener() { this.pause() }
+        rhythmButton.setOnClickListener() { this.nextRhythm() }
+        toneButton.setOnClickListener() { this.nextTone() }
         emphasisButton.setOnClickListener() {v ->  metronomeService?.toggleEmphasis() }
     }
 
     private fun setBpmText(bpm: Int) {
-        if (bpm != null) {
-            bpmText.text = if (bpm >= 100) bpm.toString() else " ${bpm.toString()}"
-        }
+        bpmText.text = if (bpm >= 100) bpm.toString() else " ${bpm.toString()}"
     }
 
     private fun nextTone() {
