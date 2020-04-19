@@ -8,10 +8,7 @@ import android.os.Binder
 import android.os.IBinder
 import android.util.Log
 import geva.oren.android_kotlin_metronome.R
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 
 /**
  * The Metronome service is responsible for playing, stoping and timing the ticks.
@@ -63,16 +60,29 @@ class MetronomeService : Service() {
     }
 
     fun play() {
-        if (!isPlaying) {
-            tickJob = coroutineScope.launch(Dispatchers.Default) {
-                isPlaying = true
-                tick()
+        tickJob = coroutineScope.launch(Dispatchers.Default) {
+            isPlaying = true
+            var tick = 0
+            while (isPlaying && isActive) {
+                var rate = 1f
+                delay(interval.toLong())
+                if (tick % rhythm.value == 0) {
+                    for (t in tickListeners)
+                        t.onTick(interval)
+                    if (emphasis && tick == 0)
+                        rate = 1.4f
+                }
+                if (isPlaying) soundPool.play(tone.value, 1f, 1f, 1, 0, rate)
+                if (tick < beatsPerMeasure * rhythm.value - 1)
+                    tick++
+                else
+                    tick = 0
             }
         }
     }
 
     fun pause() {
-        isPlaying = false
+//        isPlaying = false
         tickJob?.cancel()
     }
 
@@ -97,8 +107,11 @@ class MetronomeService : Service() {
      * Rotates to the next rhythm
      */
     fun nextRhythm(): Rhythm {
+        pause()
+        Log.i(tag, "is not active anymore")
         rhythm = rhythm.next()
         setInterval(bpm)
+        play()
         return rhythm
     }
 
@@ -109,25 +122,6 @@ class MetronomeService : Service() {
         tone = tone.next()
         setInterval(bpm)
         return tone
-    }
-
-    private fun tick() {
-        var beat = 0
-
-        while (isPlaying) {
-            var rate = 1f
-            Thread.sleep(interval.toLong())
-            if (beat % rhythm.value == 0) {
-                for (t in tickListeners) t.onTick(interval)
-                if (emphasis && beat == 0)
-                    rate = 1.4f
-            }
-            if (isPlaying) soundPool.play(tone.value, 1f, 1f, 1, 0, rate)
-            if (beat < beatsPerMeasure * rhythm.value - 1)
-                beat++
-            else
-                beat = 0
-        }
     }
 
     fun addTickListener(tickListener: TickListener) {
