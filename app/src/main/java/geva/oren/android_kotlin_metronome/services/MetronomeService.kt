@@ -27,7 +27,8 @@ class MetronomeService : Service() {
     private var bpm = 100
     private var beatsPerMeasure = 4
     private var interval = 600
-    private var isPlaying = false
+    var isPlaying = false
+        private set
     private val tickListeners = arrayListOf<TickListener>()
     private var tone =
         Tone.WOOD
@@ -65,7 +66,7 @@ class MetronomeService : Service() {
         if (!isPlaying) {
             tickJob = coroutineScope.launch(Dispatchers.Default) {
                 isPlaying = true
-                startTicking()
+                tick()
             }
         }
     }
@@ -109,7 +110,7 @@ class MetronomeService : Service() {
         return tone
     }
 
-    private suspend fun startTicking() {
+    private suspend fun tick() {
         var beat = 0
 
         while (isPlaying) {
@@ -118,12 +119,11 @@ class MetronomeService : Service() {
                 for (t in tickListeners) t.onTick(interval)
             }
             val rate = if (emphasis && beat % beatsPerMeasure == 0)  1.4f else 1.0f
-            soundPool.play(tone.value, 1f, 1f, 1, 0, rate)
+            if (isPlaying) soundPool.play(tone.value, 1f, 1f, 1, 0, rate)
             if (beat < beatsPerMeasure - 1)
                 beat++
             else
                 beat = 0
-            Log.i(TAG, beat.toString())
         }
     }
 

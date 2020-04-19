@@ -111,7 +111,6 @@ class MetronomeFragment : Fragment(),
         playButton.isEnabled = true
         pauseButton.isEnabled = false
         beatsView.resetBeats()
-
     }
 
     private fun updateBpm(bpm: Int) {
@@ -143,6 +142,7 @@ class MetronomeFragment : Fragment(),
     }
 
     override fun onTick(interval: Int) {
-        beatsView.nextBeat()
+        if (metronomeService?.isPlaying!!)
+            beatsView.nextBeat()
     }
 }
