@@ -8,6 +8,7 @@ import android.view.MotionEvent
 import android.widget.ImageView
 import android.widget.ImageView.ScaleType
 import android.widget.RelativeLayout
+import androidx.core.view.GestureDetectorCompat
 import geva.oren.android_kotlin_metronome.R
 
 class RotaryKnob(
@@ -19,7 +20,7 @@ class RotaryKnob(
     maxValue: Int
 ) :
     RelativeLayout(context), GestureDetector.OnGestureListener {
-    private val gestureDetector: GestureDetector
+    private val gestureDetector: GestureDetectorCompat
     private var mAngleDown = 0f
     private var mAngleUp = 0f
     private var maxValue = 0
@@ -31,6 +32,34 @@ class RotaryKnob(
         fun onRotate(value: Int)
     }
 
+    init {
+        this.maxValue = maxValue + 1
+        this.minValue = minValue
+
+        // create stator
+        val ivBack = ImageView(context)
+        ivBack.setImageResource(backGround)
+        val backgroundLayoutParams = LayoutParams(
+            w, h
+        )
+        backgroundLayoutParams.addRule(CENTER_IN_PARENT)
+//        addView(ivBack, backgroundLayoutParams)
+        // load rotor images
+
+        // create rotor
+        knobImageView = ImageView(context)
+        knobImageView.setImageResource(
+            R.drawable.ic_rotary_knob
+        )
+        val knobLayoutParams = LayoutParams(
+            w, h
+        ) //LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+        knobLayoutParams.addRule(CENTER_IN_PARENT)
+        addView(knobImageView, knobLayoutParams)
+
+        // enable gesture detector
+        gestureDetector = GestureDetectorCompat(context, this)
+    }
 
     /**
      * math..
@@ -136,32 +165,4 @@ class RotaryKnob(
 
     override fun onLongPress(e: MotionEvent) {}
 
-    init {
-        this.maxValue = maxValue + 1
-        this.minValue = minValue
-
-        // create stator
-        val ivBack = ImageView(context)
-        ivBack.setImageResource(backGround)
-        val backgroundLayoutParams = LayoutParams(
-            w, h
-        )
-        backgroundLayoutParams.addRule(CENTER_IN_PARENT)
-//        addView(ivBack, backgroundLayoutParams)
-        // load rotor images
-
-        // create rotor
-        knobImageView = ImageView(context)
-        knobImageView.setImageResource(
-            R.drawable.ic_rotary_knob
-        )
-        val knobLayoutParams = LayoutParams(
-            w, h
-        ) //LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        knobLayoutParams.addRule(CENTER_IN_PARENT)
-        addView(knobImageView, knobLayoutParams)
-
-        // enable gesture detector
-        gestureDetector = GestureDetector(getContext(), this)
-    }
 }
