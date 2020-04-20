@@ -123,21 +123,9 @@
         android:id="@+id/playButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:src="@android:drawable/ic_media_play"
-        app:layout_constraintStart_toStartOf="@+id/bpmSeekbar"
-        app:layout_constraintTop_toBottomOf="@+id/bpmSeekbar" />
-
-    <SeekBar
-        android:id="@+id/bpmSeekbar"
-        android:layout_width="213dp"
-        android:layout_height="32dp"
         android:layout_marginTop="32dp"
-        android:max="220"
-        android:min="40"
-        android:progress="100"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:src="@android:drawable/ic_media_play"
+        app:layout_constraintStart_toStartOf="@+id/screenLayout"
         app:layout_constraintTop_toBottomOf="@+id/screenLayout" />
 
     <ImageButton

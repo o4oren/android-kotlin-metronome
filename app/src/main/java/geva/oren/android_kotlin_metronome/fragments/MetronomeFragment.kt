@@ -10,11 +10,15 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RelativeLayout
 import android.widget.SeekBar
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import geva.oren.android_kotlin_metronome.services.MetronomeService
 import geva.oren.android_kotlin_metronome.R
+import geva.oren.android_kotlin_metronome.services.MetronomeService
+import geva.oren.android_kotlin_metronome.views.RotaryKnob
 import kotlinx.android.synthetic.main.metronome_fragment.*
 
 
@@ -22,7 +26,7 @@ import kotlinx.android.synthetic.main.metronome_fragment.*
  * Main Metronome app fragment
  */
 class MetronomeFragment : Fragment(),
-    MetronomeService.TickListener {
+    MetronomeService.TickListener, RotaryKnob.RotaryKnobListener {
 
     private var isBound = false
     private var metronomeService: MetronomeService? = null
@@ -40,21 +44,6 @@ class MetronomeFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         Log.i(TAG, "View created")
         bindService()
-        if (bpmSeekbar != null)
-            setBpmText(bpmSeekbar.progress)
-
-        bpmSeekbar?.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
-            override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                setBpmText(progress)
-                updateBpm(progress)
-            }
-
-            override fun onStartTrackingTouch(seekBar: SeekBar?) {
-            }
-
-            override fun onStopTrackingTouch(seekBar: SeekBar?) {
-            }
-        })
 
         playButton.setOnClickListener() { this.play() }
         pauseButton.setOnClickListener() { this.pause() }
@@ -64,6 +53,21 @@ class MetronomeFragment : Fragment(),
             val isEmphasis = metronomeService?.toggleEmphasis()
             beatsView.isEmphasis =  isEmphasis!!
         }
+
+        val rotary = RotaryKnob(
+            context!!, R.drawable.ic_rotary_knob,
+            336, 336
+        )
+
+        digitalMetronomeLayout.addView(rotary)
+        val params = rotary.layoutParams as ConstraintLayout.LayoutParams
+        params.topToBottom = screenLayout.id
+        params.leftToRight = rhythmButton.id
+        params.leftMargin = 24
+        params.topMargin = 64
+
+        rotary.SetListener(this)
+
     }
 
     private fun bindService() {
@@ -140,6 +144,18 @@ class MetronomeFragment : Fragment(),
             activity!!.unbindService(mConnection)
             isBound = false
         }
+    }
+
+    /**
+     * RotaryListener interface implementation
+     */
+    override fun onRotate(percentage: Int) {
+        val min = 40
+        val max = 220
+        val increment = (max - min) / 100f
+        val bpm = increment * percentage + min
+        setBpmText(bpm.toInt())
+        metronomeService?.setInterval(bpm.toInt())
     }
 
     override fun onTick(interval: Int) {
