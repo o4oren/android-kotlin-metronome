@@ -155,11 +155,13 @@ class MetronomeService : Service() {
      * Rotates to the next rhythm
      */
     fun nextRhythm(): Rhythm {
-        pause()
-        Log.i(TAG, "is not active anymore")
+        val isPlaying = this.isPlaying
         rhythm = rhythm.next()
         setInterval(bpm)
-        play()
+        if (isPlaying) {
+            pause()
+            play()
+        }
         return rhythm
     }
 
