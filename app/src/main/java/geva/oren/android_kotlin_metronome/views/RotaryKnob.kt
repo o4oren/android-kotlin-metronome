@@ -14,22 +14,23 @@ class RotaryKnob(
     context: Context,
     backGround: Int,
     w: Int,
-    h: Int
+    h: Int,
+    minValue: Int,
+    maxValue: Int
 ) :
     RelativeLayout(context), GestureDetector.OnGestureListener {
     private val gestureDetector: GestureDetector
     private var mAngleDown = 0f
     private var mAngleUp = 0f
+    private var maxValue = 0
+    private var minValue = 0
     private val knobImageView: ImageView
+    var listener: RotaryKnobListener? = null
 
     interface RotaryKnobListener {
-        fun onRotate(percentage: Int)
+        fun onRotate(value: Int)
     }
 
-    private var m_listener: RotaryKnobListener? = null
-    fun SetListener(l: RotaryKnobListener?) {
-        m_listener = l
-    }
 
     /**
      * math..
@@ -37,13 +38,17 @@ class RotaryKnob(
      * @param y
      * @return
      */
-    private fun cartesianToPolar(x: Float, y: Float): Float {
-        return (-Math.toDegrees(
+    private fun calculateAngle(x: Float, y: Float): Float {
+        val angle = (-Math.toDegrees(
             Math.atan2(
                 x - 0.5f.toDouble(),
                 y - 0.5f.toDouble()
             )
         )).toFloat()
+        Log.i("KNOb", "x: $x y:$y")
+
+        Log.i("KNOb", "$angle")
+        return angle
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -53,14 +58,14 @@ class RotaryKnob(
     override fun onDown(event: MotionEvent): Boolean {
         val x = event.x / width.toFloat()
         val y = event.y / height.toFloat()
-        mAngleDown = cartesianToPolar(1 - x, 1 - y) // 1- to correct our custom axis direction
+        mAngleDown = calculateAngle(1 - x, 1 - y) // 1- to correct our custom axis direction
         return true
     }
 
     override fun onSingleTapUp(e: MotionEvent): Boolean {
         val x = e.x / width.toFloat()
         val y = e.y / height.toFloat()
-        mAngleUp = cartesianToPolar(1 - x, 1 - y) // 1- to correct our custom axis direction
+        mAngleUp = calculateAngle(1 - x, 1 - y) // 1- to correct our custom axis direction
         return true
     }
 
@@ -72,22 +77,16 @@ class RotaryKnob(
             knobImageView.scaleType = ScaleType.MATRIX
             matrix.postRotate(
                 deg,
-                knobImageView.drawable.bounds.width().toFloat()/2,
-                knobImageView.drawable.bounds.height().toFloat()/2
+                width.toFloat() / 2,
+                height.toFloat() / 2
             ) //getWidth()/2, getHeight()/2);
-            Log.i("Knob", width.toString())
-            Log.i("Knob", width.toString())
-            Log.i("Knob", knobImageView.drawable.bounds.width().toFloat().toString())
+//            Log.i("Knob", width.toString())
+//            Log.i("Knob", width.toString())
+//            Log.i("Knob", knobImageView.drawable.bounds.width().toFloat().toString())
 
 
             knobImageView.imageMatrix = matrix
         }
-    }
-
-    fun setRotorPercentage(percentage: Int) {
-        var posDegree = percentage * 3 - 150
-        if (posDegree < 0) posDegree += 360
-        setRotorPosAngle(posDegree.toFloat())
     }
 
     override fun onScroll(
@@ -99,7 +98,7 @@ class RotaryKnob(
         val x = e2.x / width.toFloat()
         val y = e2.y / height.toFloat()
         val rotDegrees =
-            cartesianToPolar(1 - x, 1 - y) // 1- to correct our custom axis direction
+            calculateAngle(1 - x, 1 - y) // 1- to correct our custom axis direction
         return if (!java.lang.Float.isNaN(rotDegrees)) {
             // instead of getting 0-> 180, -180 0 , we go for 0 -> 360
             var posDegrees = rotDegrees
@@ -112,9 +111,11 @@ class RotaryKnob(
                 // get a linear scale
                 val scaleDegrees =
                     rotDegrees + 150 // given the current parameters, we go from 0 to 300
-                // get position percent
-                val percent = (scaleDegrees / 3).toInt()
-                if (m_listener != null) m_listener!!.onRotate(percent)
+
+                // Calculate rotary value
+                val divider = 300f / (maxValue - minValue)
+                val value = ((scaleDegrees / divider) + minValue).toInt()
+                if (listener != null) listener!!.onRotate(value)
                 true //consumed
             } else false
         } else false // not consumed
@@ -136,6 +137,8 @@ class RotaryKnob(
     override fun onLongPress(e: MotionEvent) {}
 
     init {
+        this.maxValue = maxValue
+        this.minValue = minValue
 
         // create stator
         val ivBack = ImageView(context)
@@ -150,7 +153,8 @@ class RotaryKnob(
         // create rotor
         knobImageView = ImageView(context)
         knobImageView.setImageResource(
-            R.drawable.ic_rotary_knob)
+            R.drawable.ic_rotary_knob
+        )
         val knobLayoutParams = LayoutParams(
             w, h
         ) //LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);

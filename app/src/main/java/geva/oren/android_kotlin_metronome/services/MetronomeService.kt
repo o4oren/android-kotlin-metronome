@@ -27,7 +27,7 @@ class MetronomeService : Service() {
     private lateinit var soundPool: SoundPool
     private var tickJob: Job? = null
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
-    private var bpm = 100
+    var bpm = 128
     private var beatsPerMeasure = 4
     private var interval = 600
     var isPlaying = false

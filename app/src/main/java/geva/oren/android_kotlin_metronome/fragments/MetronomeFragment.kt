@@ -10,10 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
-import android.widget.SeekBar
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import geva.oren.android_kotlin_metronome.R
@@ -56,7 +53,7 @@ class MetronomeFragment : Fragment(),
 
         val rotary = RotaryKnob(
             context!!, R.drawable.ic_rotary_knob,
-            336, 336
+            336, 336, 40, 220
         )
 
         digitalMetronomeLayout.addView(rotary)
@@ -66,8 +63,7 @@ class MetronomeFragment : Fragment(),
         params.leftMargin = 24
         params.topMargin = 64
 
-        rotary.SetListener(this)
-
+        rotary.listener = this
     }
 
     private fun bindService() {
@@ -149,13 +145,10 @@ class MetronomeFragment : Fragment(),
     /**
      * RotaryListener interface implementation
      */
-    override fun onRotate(percentage: Int) {
-        val min = 40
-        val max = 220
-        val increment = (max - min) / 100f
-        val bpm = increment * percentage + min
-        setBpmText(bpm.toInt())
-        metronomeService?.setInterval(bpm.toInt())
+    override fun onRotate(value: Int) {
+        val bpm = value
+        setBpmText(bpm)
+        metronomeService?.setInterval(bpm)
     }
 
     override fun onTick(interval: Int) {
