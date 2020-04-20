@@ -137,7 +137,7 @@ class RotaryKnob(
     override fun onLongPress(e: MotionEvent) {}
 
     init {
-        this.maxValue = maxValue
+        this.maxValue = maxValue + 1
         this.minValue = minValue
 
         // create stator
