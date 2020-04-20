@@ -115,6 +115,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
         android:src="@android:drawable/ic_media_pause"
         app:layout_constraintStart_toEndOf="@+id/playButton"
         app:layout_constraintTop_toTopOf="@+id/playButton" />
@@ -124,6 +127,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
         android:src="@android:drawable/ic_media_play"
         app:layout_constraintStart_toStartOf="@+id/screenLayout"
         app:layout_constraintTop_toBottomOf="@+id/screenLayout" />
@@ -134,6 +140,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:cropToPadding="false"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
         android:src="@drawable/ic_quarter_note_white"
         app:layout_constraintBottom_toBottomOf="@+id/pauseButton"
         app:layout_constraintStart_toEndOf="@+id/pauseButton"
@@ -145,6 +154,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/tone"
+        android:textColor="#fff"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
         app:layout_constraintStart_toStartOf="@+id/playButton"
         app:layout_constraintTop_toBottomOf="@+id/playButton" />
 
@@ -154,6 +167,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:src="@drawable/ic_emphasis"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
         app:layout_constraintEnd_toEndOf="@+id/rhythmButton"
         app:layout_constraintStart_toStartOf="@+id/rhythmButton"
         app:layout_constraintTop_toBottomOf="@+id/rhythmButton" />

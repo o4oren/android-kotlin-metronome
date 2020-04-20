@@ -3,4 +3,5 @@
     <dimen name="screen_label_text_size">12sp</dimen>
     <dimen name="bpm_digital_text">32sp</dimen>
     <dimen name="tone_digital_text">20sp</dimen>
+    <dimen name="button_corner_radius">5dp</dimen>
 </resources>

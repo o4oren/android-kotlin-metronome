@@ -7,4 +7,7 @@
     <color name="metronomeMetal">#2F2F2F</color>
     <color name="digitalText">#3C0E00</color>
     <color name="faintDigitalText">#E6A25F</color>
+    <color name="darkButton">#000000</color>
+    <color name="brightButton">#5B5B5B</color>
+
 </resources>
