@@ -39,13 +39,7 @@ class MetronomeFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         Log.i(TAG, "View created")
-        activity?.bindService(
-            Intent(
-                activity,
-                MetronomeService::class.java
-            ), mConnection, Context.BIND_AUTO_CREATE
-        )
-        isBound = true
+        bindService()
         if (bpmSeekbar != null)
             setBpmText(bpmSeekbar.progress)
 
@@ -70,6 +64,16 @@ class MetronomeFragment : Fragment(),
             val isEmphasis = metronomeService?.toggleEmphasis()
             beatsView.isEmphasis =  isEmphasis!!
         }
+    }
+
+    private fun bindService() {
+        activity?.bindService(
+            Intent(
+                activity,
+                MetronomeService::class.java
+            ), mConnection, Context.BIND_AUTO_CREATE
+        )
+        isBound = true
     }
 
     private fun setBpmText(bpm: Int) {
@@ -102,16 +106,12 @@ class MetronomeFragment : Fragment(),
     }
 
     private fun play() {
+        beatsView.resetBeats(true)
         metronomeService?.play()
-        playButton.isEnabled = false
-        pauseButton.isEnabled = true
     }
 
     private fun pause() {
         metronomeService?.pause()
-        playButton.isEnabled = true
-        pauseButton.isEnabled = false
-        beatsView.resetBeats(true)
     }
 
     private fun updateBpm(bpm: Int) {
