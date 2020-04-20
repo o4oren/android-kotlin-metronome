@@ -27,6 +27,7 @@ class RotaryKnob(
     private var minValue = 0
     private val knobImageView: ImageView
     var listener: RotaryKnobListener? = null
+    var value = 130
 
     interface RotaryKnobListener {
         fun onRotate(value: Int)
@@ -143,7 +144,7 @@ class RotaryKnob(
 
                 // Calculate rotary value
                 val divider = 300f / (maxValue - minValue)
-                val value = ((scaleDegrees / divider) + minValue).toInt()
+                value = ((scaleDegrees / divider) + minValue).toInt()
                 if (listener != null) listener!!.onRotate(value)
                 true //consumed
             } else false

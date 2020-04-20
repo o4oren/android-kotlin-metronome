@@ -64,6 +64,7 @@ class MetronomeFragment : Fragment(),
         params.topMargin = 64
 
         rotary.listener = this
+        setBpmText(rotary.value)
     }
 
     private fun bindService() {
