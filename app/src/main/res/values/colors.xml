@@ -4,10 +4,10 @@
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
     <color name="screenBackground">#FFB872</color>
-    <color name="metronomeMetal">#2F2F2F</color>
+    <color name="metronomeMetal">#CCCCCC</color>
     <color name="digitalText">#3C0E00</color>
     <color name="faintDigitalText">#E6A25F</color>
-    <color name="darkButton">#1A1A1A</color>
+    <color name="darkButton">#212121</color>
     <color name="brightButton">#5B5B5B</color>
 
 </resources>

@@ -5,7 +5,7 @@
     android:id="@+id/digitalMetronomeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/metronomeMetal"
+    android:background="@drawable/silver_gradient"
     tools:context="geva.oren.android_kotlin_metronome.fragments.MetronomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:background="@drawable/screen_background"
         app:layout_constraintBottom_toBottomOf="parent"
