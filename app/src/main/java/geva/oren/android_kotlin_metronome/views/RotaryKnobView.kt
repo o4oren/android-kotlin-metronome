@@ -15,14 +15,12 @@ import androidx.core.view.GestureDetectorCompat
 import geva.oren.android_kotlin_metronome.R
 import kotlinx.android.synthetic.main.rotary_knob_view.view.*
 
-class RotaryKnobView(
-    context: Context,
-    attrs: AttributeSet
-) :
-    RelativeLayout(context), GestureDetector.OnGestureListener {
+class RotaryKnobView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
+) : RelativeLayout(context, attrs, defStyleAttr), GestureDetector.OnGestureListener {
     private val gestureDetector: GestureDetectorCompat
-    private var mAngleDown = 0f
-    private var mAngleUp = 0f
+//    private var mAngleDown = 0f
+//    private var mAngleUp = 0f
     private var maxValue = 99
     private var minValue = 0
     var listener: RotaryKnobListener? = null
@@ -56,34 +54,12 @@ class RotaryKnobView(
             }
         }
 
-        // create stator
-//        val ivBack = ImageView(context)
-//        ivBack.setImageResource(backGround)
-//        val backgroundLayoutParams = LayoutParams(
-//            width, height
-//        )
-//        backgroundLayoutParams.addRule(CENTER_IN_PARENT)
-//        addView(ivBack, backgroundLayoutParams)
-        // load rotor images
-
-//        // create rotor
-//        knobImageView = ImageView(context)
-//        knobImageView.setImageResource(
-//
-//        )
-//        val knobLayoutParams = LayoutParams(
-//            width, height
-//        ) //LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-//        knobLayoutParams.addRule(CENTER_IN_PARENT)
-//        addView(knobImageView, knobLayoutParams)
-
-        // enable gesture detector
         gestureDetector = GestureDetectorCompat(context, this)
-        Log.i("===KNOB===", "Initialized")
     }
 
     /**
-     * math..
+     * Calculate the angle from x,y coordinates (cartesian to polar converstion)
+     *
      * @param x
      * @param y
      * @return
@@ -95,36 +71,17 @@ class RotaryKnobView(
                 y - 0.5f.toDouble()
             )
         )).toFloat()
-        Log.i("KNOb", "x: $x y:$y")
-
-        Log.i("KNOb", "$angle")
         return angle
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
-        return if (gestureDetector.onTouchEvent(event)) true else super.onTouchEvent(event)
+        return if (gestureDetector.onTouchEvent(event))
+            true
+        else
+            super.onTouchEvent(event)
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-        Log.i("===KNOB===", "attached!")
-    }
-
-    override fun onDown(event: MotionEvent): Boolean {
-        val x = event.x / width.toFloat()
-        val y = event.y / height.toFloat()
-        mAngleDown = calculateAngle(1 - x, 1 - y) // 1- to correct our custom axis direction
-        return true
-    }
-
-    override fun onSingleTapUp(e: MotionEvent): Boolean {
-        val x = e.x / width.toFloat()
-        val y = e.y / height.toFloat()
-        mAngleUp = calculateAngle(1 - x, 1 - y) // 1- to correct our custom axis direction
-        return true
-    }
-
-    fun setRotorPosAngle(deg: Float) {
+    private fun setRotorPosAngle(deg: Float) {
         var deg = deg
         if (deg >= 210 || deg <= 150) {
             if (deg > 180) deg = deg - 360
@@ -134,16 +91,16 @@ class RotaryKnobView(
                 deg,
                 width.toFloat() / 2,
                 height.toFloat() / 2
-            ) //getWidth()/2, getHeight()/2);
-//            Log.i("Knob", width.toString())
-//            Log.i("Knob", width.toString())
-//            Log.i("Knob", knobImageView.drawable.bounds.width().toFloat().toString())
-
-
+            )
             knobImageView.imageMatrix = matrix
         }
     }
 
+    /**
+     * We're only interested in e2 - the coordinates of the end movement.
+     * We calculate the polar angle (Theta) from these coordinates and use these to animate the
+     * knob movement and calculate the value
+     */
     override fun onScroll(
         e1: MotionEvent,
         e2: MotionEvent,
@@ -152,8 +109,7 @@ class RotaryKnobView(
     ): Boolean {
         val x = e2.x / width.toFloat()
         val y = e2.y / height.toFloat()
-        val rotDegrees =
-            calculateAngle(1 - x, 1 - y) // 1- to correct our custom axis direction
+        val rotDegrees = calculateAngle(1 - x, 1 - y) // 1- to correct our custom axis direction
         return if (!java.lang.Float.isNaN(rotDegrees)) {
             // instead of getting 0-> 180, -180 0 , we go for 0 -> 360
             var posDegrees = rotDegrees
@@ -176,19 +132,25 @@ class RotaryKnobView(
         } else false // not consumed
     }
 
-    override fun onShowPress(e: MotionEvent) {
-        // TODO Auto-generated method stub
-    }
-
-    override fun onFling(
-        arg0: MotionEvent,
-        arg1: MotionEvent,
-        arg2: Float,
-        arg3: Float
-    ): Boolean {
+    // Unused. Needed for GestureDetector
+    override fun onFling(arg0: MotionEvent, arg1: MotionEvent, arg2: Float, arg3: Float): Boolean {
         return false
     }
 
+    // Unused. Needed for GestureDetector
     override fun onLongPress(e: MotionEvent) {}
+
+    // Unused. Needed for GestureDetector
+    override fun onShowPress(e: MotionEvent) {}
+
+    // Unused. Needed for GestureDetector
+    override fun onDown(event: MotionEvent): Boolean {
+        return true
+    }
+
+    // Unused. Needed for GestureDetector
+    override fun onSingleTapUp(e: MotionEvent): Boolean {
+        return true
+    }
 
 }

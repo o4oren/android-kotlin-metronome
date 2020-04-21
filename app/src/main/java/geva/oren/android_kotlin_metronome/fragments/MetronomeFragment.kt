@@ -6,19 +6,15 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.os.Bundle
 import android.os.IBinder
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import geva.oren.android_kotlin_metronome.R
 import geva.oren.android_kotlin_metronome.services.MetronomeService
 import geva.oren.android_kotlin_metronome.views.RotaryKnobView
-import geva.oren.android_kotlin_metronome.views.TonesView
 import kotlinx.android.synthetic.main.metronome_fragment.*
-
 
 /**
  * Main Metronome app fragment
@@ -34,15 +30,12 @@ class MetronomeFragment : Fragment(),
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        Log.i(TAG, "on create view")
         return inflater.inflate(R.layout.metronome_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.i(TAG, "View created")
         bindService()
-
         playButton.setOnClickListener() { this.play() }
         pauseButton.setOnClickListener() { this.pause() }
         rhythmButton.setOnClickListener() { this.nextRhythm() }
@@ -51,12 +44,6 @@ class MetronomeFragment : Fragment(),
             val isEmphasis = metronomeService?.toggleEmphasis()
             beatsView.isEmphasis =  isEmphasis!!
         }
-
-
-        val knob = digitalMetronomeLayout.getChildAt(digitalMetronomeLayout.childCount - 1) as RotaryKnobView
-        knob.id = 12345
-//
-        val rotaryKnob = digitalMetronomeLayout.findViewById<RotaryKnobView>(12345)
         rotaryKnob.listener = this
         setBpmText(rotaryKnob.value)
     }
@@ -127,8 +114,6 @@ class MetronomeFragment : Fragment(),
 
     override fun onDestroy() {
         super.onDestroy()
-        Log.i(TAG, "On destroy")
-
         if (isBound) {
             metronomeService?.removeTickListener(this)
             // Detach our existing connection.
