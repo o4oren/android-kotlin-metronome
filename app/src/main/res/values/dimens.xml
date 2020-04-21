@@ -4,4 +4,6 @@
     <dimen name="bpm_digital_text">32sp</dimen>
     <dimen name="tone_digital_text">20sp</dimen>
     <dimen name="button_corner_radius">5dp</dimen>
+    <dimen name="knob_width">150dp</dimen>
+    <dimen name="knob_height">150dp</dimen>
 </resources>

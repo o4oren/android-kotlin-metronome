@@ -53,7 +53,7 @@ class MetronomeFragment : Fragment(),
 
         val rotary = RotaryKnob(
             context!!, R.drawable.ic_rotary_knob,
-            336, 336, 40, 220
+            resources.getDimensionPixelSize(R.dimen.knob_width), resources.getDimensionPixelSize(R.dimen.knob_height), 40, 220
         )
 
         digitalMetronomeLayout.addView(rotary)
