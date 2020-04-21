@@ -175,16 +175,16 @@
         app:layout_constraintStart_toStartOf="@+id/rhythmButton"
         app:layout_constraintTop_toBottomOf="@+id/rhythmButton" />
 
-    <geva.oren.android_kotlin_metronome.views.RotaryKnobView
+    <view
         android:id="@+id/rotaryKnob"
         class="geva.oren.android_kotlin_metronome.views.RotaryKnobView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        app:initialValue="130"
         app:knobDrawable="@drawable/ic_rotary_knob"
         app:layout_constraintStart_toStartOf="@+id/toneButton"
         app:layout_constraintTop_toBottomOf="@+id/toneButton"
+        app:initialValue="130"
         app:maxValue="220"
         app:minValue="40" />
 

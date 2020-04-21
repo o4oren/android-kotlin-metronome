@@ -53,12 +53,12 @@ class MetronomeFragment : Fragment(),
         }
 
 
-        val c = digitalMetronomeLayout.getChildAt(digitalMetronomeLayout.childCount - 1) as RotaryKnobView
-        c.listener = this
-        setBpmText(c.value)
+        val knob = digitalMetronomeLayout.getChildAt(digitalMetronomeLayout.childCount - 1) as RotaryKnobView
+        knob.id = 12345
 //
-//        rotaryKnob.listener = this
-//        setBpmText(rotaryKnob.value)
+        val rotaryKnob = digitalMetronomeLayout.findViewById<RotaryKnobView>(12345)
+        rotaryKnob.listener = this
+        setBpmText(rotaryKnob.value)
     }
 
     private fun bindService() {

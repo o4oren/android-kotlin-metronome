@@ -47,7 +47,7 @@ class RotaryKnobView(
 
             try {
                 minValue = getInt(R.styleable.RotaryKnobView_minValue, 40)
-                maxValue = getInt(R.styleable.RotaryKnobView_maxValue, 220)
+                maxValue = getInt(R.styleable.RotaryKnobView_maxValue, 220) + 1
                 value = getInt(R.styleable.RotaryKnobView_initialValue, 130)
                 knobDrawable = getDrawable(R.styleable.RotaryKnobView_knobDrawable)
                 knobImageView.setImageDrawable(knobDrawable)
