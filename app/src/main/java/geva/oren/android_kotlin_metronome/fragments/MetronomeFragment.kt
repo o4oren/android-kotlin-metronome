@@ -15,7 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import geva.oren.android_kotlin_metronome.R
 import geva.oren.android_kotlin_metronome.services.MetronomeService
-import geva.oren.android_kotlin_metronome.views.RotaryKnob
+import geva.oren.android_kotlin_metronome.views.RotaryKnobView
+import geva.oren.android_kotlin_metronome.views.TonesView
 import kotlinx.android.synthetic.main.metronome_fragment.*
 
 
@@ -23,7 +24,7 @@ import kotlinx.android.synthetic.main.metronome_fragment.*
  * Main Metronome app fragment
  */
 class MetronomeFragment : Fragment(),
-    MetronomeService.TickListener, RotaryKnob.RotaryKnobListener {
+    MetronomeService.TickListener, RotaryKnobView.RotaryKnobListener {
 
     private var isBound = false
     private var metronomeService: MetronomeService? = null
@@ -51,20 +52,13 @@ class MetronomeFragment : Fragment(),
             beatsView.isEmphasis =  isEmphasis!!
         }
 
-        val rotary = RotaryKnob(
-            context!!, R.drawable.ic_rotary_knob,
-            resources.getDimensionPixelSize(R.dimen.knob_width), resources.getDimensionPixelSize(R.dimen.knob_height), 40, 220
-        )
 
-        digitalMetronomeLayout.addView(rotary)
-        val params = rotary.layoutParams as ConstraintLayout.LayoutParams
-        params.topToBottom = screenLayout.id
-        params.leftToRight = rhythmButton.id
-        params.leftMargin = 24
-        params.topMargin = 64
-
-        rotary.listener = this
-        setBpmText(rotary.value)
+        val c = digitalMetronomeLayout.getChildAt(digitalMetronomeLayout.childCount - 1) as RotaryKnobView
+        c.listener = this
+        setBpmText(c.value)
+//
+//        rotaryKnob.listener = this
+//        setBpmText(rotaryKnob.value)
     }
 
     private fun bindService() {

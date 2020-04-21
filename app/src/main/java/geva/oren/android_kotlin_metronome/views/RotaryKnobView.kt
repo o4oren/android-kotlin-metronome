@@ -2,32 +2,32 @@ package geva.oren.android_kotlin_metronome.views
 
 import android.content.Context
 import android.graphics.Matrix
+import android.graphics.drawable.Drawable
+import android.util.AttributeSet
 import android.util.Log
 import android.view.GestureDetector
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.widget.ImageView
 import android.widget.ImageView.ScaleType
 import android.widget.RelativeLayout
 import androidx.core.view.GestureDetectorCompat
 import geva.oren.android_kotlin_metronome.R
+import kotlinx.android.synthetic.main.rotary_knob_view.view.*
 
-class RotaryKnob(
+class RotaryKnobView(
     context: Context,
-    backGround: Int,
-    w: Int,
-    h: Int,
-    minValue: Int,
-    maxValue: Int
+    attrs: AttributeSet
 ) :
     RelativeLayout(context), GestureDetector.OnGestureListener {
     private val gestureDetector: GestureDetectorCompat
     private var mAngleDown = 0f
     private var mAngleUp = 0f
-    private var maxValue = 0
+    private var maxValue = 99
     private var minValue = 0
-    private val knobImageView: ImageView
     var listener: RotaryKnobListener? = null
     var value = 130
+    var knobDrawable: Drawable? = null
 
     interface RotaryKnobListener {
         fun onRotate(value: Int)
@@ -37,29 +37,49 @@ class RotaryKnob(
         this.maxValue = maxValue + 1
         this.minValue = minValue
 
+        LayoutInflater.from(context)
+            .inflate(R.layout.rotary_knob_view, this, true)
+
+        context.theme.obtainStyledAttributes(
+            attrs,
+            R.styleable.RotaryKnobView,
+            0, 0).apply {
+
+            try {
+                minValue = getInt(R.styleable.RotaryKnobView_minValue, 40)
+                maxValue = getInt(R.styleable.RotaryKnobView_maxValue, 220)
+                value = getInt(R.styleable.RotaryKnobView_initialValue, 130)
+                knobDrawable = getDrawable(R.styleable.RotaryKnobView_knobDrawable)
+                knobImageView.setImageDrawable(knobDrawable)
+            } finally {
+                recycle()
+            }
+        }
+
         // create stator
-        val ivBack = ImageView(context)
-        ivBack.setImageResource(backGround)
-        val backgroundLayoutParams = LayoutParams(
-            w, h
-        )
-        backgroundLayoutParams.addRule(CENTER_IN_PARENT)
+//        val ivBack = ImageView(context)
+//        ivBack.setImageResource(backGround)
+//        val backgroundLayoutParams = LayoutParams(
+//            width, height
+//        )
+//        backgroundLayoutParams.addRule(CENTER_IN_PARENT)
 //        addView(ivBack, backgroundLayoutParams)
         // load rotor images
 
-        // create rotor
-        knobImageView = ImageView(context)
-        knobImageView.setImageResource(
-            R.drawable.ic_rotary_knob
-        )
-        val knobLayoutParams = LayoutParams(
-            w, h
-        ) //LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-        knobLayoutParams.addRule(CENTER_IN_PARENT)
-        addView(knobImageView, knobLayoutParams)
+//        // create rotor
+//        knobImageView = ImageView(context)
+//        knobImageView.setImageResource(
+//
+//        )
+//        val knobLayoutParams = LayoutParams(
+//            width, height
+//        ) //LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+//        knobLayoutParams.addRule(CENTER_IN_PARENT)
+//        addView(knobImageView, knobLayoutParams)
 
         // enable gesture detector
         gestureDetector = GestureDetectorCompat(context, this)
+        Log.i("===KNOB===", "Initialized")
     }
 
     /**
@@ -83,6 +103,11 @@ class RotaryKnob(
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return if (gestureDetector.onTouchEvent(event)) true else super.onTouchEvent(event)
+    }
+
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
+        Log.i("===KNOB===", "attached!")
     }
 
     override fun onDown(event: MotionEvent): Boolean {
