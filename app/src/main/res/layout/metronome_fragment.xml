@@ -184,7 +184,7 @@
         app:knobDrawable="@drawable/ic_rotary_knob"
         app:layout_constraintStart_toStartOf="@+id/toneButton"
         app:layout_constraintTop_toBottomOf="@+id/toneButton"
-        app:initialValue="130"
+        app:initialValue="40"
         app:maxValue="220"
         app:minValue="40" />
 
