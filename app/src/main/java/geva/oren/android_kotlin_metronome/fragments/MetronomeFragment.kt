@@ -54,12 +54,12 @@ class MetronomeFragment : Fragment(),
 
     private fun updateBeatsUp() {
         val beats = metronomeService?.setBeatsUp()
-        beatsView.beats = beats!!
+        beatsView.beatsPerMeasure = beats!!
     }
 
     private fun updateBeatsDown() {
         val beats = metronomeService?.setBeatsDown()
-        beatsView.beats = beats!!
+        beatsView.beatsPerMeasure = beats!!
     }
 
     private fun tapTempAction() {

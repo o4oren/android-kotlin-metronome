@@ -6,4 +6,5 @@
     <dimen name="button_corner_radius">5dp</dimen>
     <dimen name="knob_width">200dp</dimen>
     <dimen name="knob_height">200dp</dimen>
+    <dimen name="rhythm_width">64dp</dimen>
 </resources>

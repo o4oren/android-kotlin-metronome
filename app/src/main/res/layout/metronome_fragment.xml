@@ -65,6 +65,35 @@
             app:layout_constraintEnd_toEndOf="@+id/bpmText"
             app:layout_constraintStart_toStartOf="@+id/bpmText" />
 
+        <ImageView
+            android:id="@+id/rhythmBackground"
+            android:layout_width="@dimen/rhythm_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            app:layout_constraintBottom_toBottomOf="@+id/bpmText"
+            app:layout_constraintStart_toEndOf="@+id/bpmText"
+            app:layout_constraintTop_toTopOf="@+id/bpmText"
+            android:src="@drawable/ic_notes_background_faint" />
+        <ImageView
+            android:id="@+id/rhythmBackgroundQuarterNite"
+            android:layout_width="@dimen/rhythm_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            app:layout_constraintBottom_toBottomOf="@+id/bpmText"
+            app:layout_constraintStart_toEndOf="@+id/bpmText"
+            app:layout_constraintTop_toTopOf="@+id/bpmText"
+            android:src="@drawable/ic_quarter_note_faint" />
+
+        <ImageView
+            android:id="@+id/rhythmImage"
+            android:layout_width="@dimen/rhythm_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:src="@drawable/ic_quarter_note"
+            app:layout_constraintBottom_toBottomOf="@+id/bpmText"
+            app:layout_constraintStart_toEndOf="@+id/bpmText"
+            app:layout_constraintTop_toTopOf="@+id/bpmText" />
+
         <TextView
             android:id="@+id/rhythmLabelText"
             android:layout_width="wrap_content"
@@ -76,16 +105,6 @@
             app:layout_constraintEnd_toEndOf="@+id/rhythmImage"
             app:layout_constraintStart_toStartOf="@+id/rhythmImage"
             app:layout_constraintTop_toTopOf="@+id/tempoLabelText" />
-
-        <ImageView
-            android:id="@+id/rhythmImage"
-            android:layout_width="47dp"
-            android:layout_height="39dp"
-            android:layout_marginStart="64dp"
-            android:src="@drawable/ic_quarter_note"
-            app:layout_constraintBottom_toBottomOf="@+id/bpmText"
-            app:layout_constraintStart_toEndOf="@+id/bpmText"
-            app:layout_constraintTop_toTopOf="@+id/bpmText" />
 
         <geva.oren.android_kotlin_metronome.views.TonesView
             android:id="@+id/tonesView"

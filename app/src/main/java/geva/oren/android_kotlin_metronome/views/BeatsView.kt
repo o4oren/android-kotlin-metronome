@@ -16,11 +16,12 @@ class BeatsView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr) {
 
-    var beats = 4
+    var beatsPerMeasure = 4
         set(beats) {
             field = beats
             resetBeats(true)
         }
+    val MAX_BEAT = 9
     var isEmphasis = true
     set(isEmphasis: Boolean) {
         field = isEmphasis
@@ -35,6 +36,8 @@ class BeatsView @JvmOverloads constructor(
         ContextCompat.getDrawable(context, R.drawable.first_beat_circle_empty_no_emphasis)
     private val firstFullCircleNoEmphasis =
         ContextCompat.getDrawable(context, R.drawable.first_beat_circle_full_no_emphasis)
+    private val offCircle =
+        ContextCompat.getDrawable(context, R.drawable.beat_circle_off)
     private val emptyCircle = ContextCompat.getDrawable(context, R.drawable.beat_circle_empty)
     private val fullCircle = ContextCompat.getDrawable(context, R.drawable.beat_circle_full)
     private val marginParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
@@ -48,7 +51,7 @@ class BeatsView @JvmOverloads constructor(
     }
 
     private fun createBeats() {
-        for (i in 0 until beats) {
+        for (i in 0 until MAX_BEAT) {
             val imageView = ImageView(context)
             val drawable = getCircleDrawable(i, false)
             imageView.setImageDrawable(drawable)
@@ -60,7 +63,7 @@ class BeatsView @JvmOverloads constructor(
     fun nextBeat() {
         if (highlightedBeat != -1) {
             val prevBeat = getChildAt(highlightedBeat) as ImageView
-            if (highlightedBeat == beats - 1)
+            if (highlightedBeat == beatsPerMeasure - 1)
                 highlightedBeat = 0
             else highlightedBeat++
             val currentBeat = getChildAt(highlightedBeat) as ImageView
@@ -83,7 +86,8 @@ class BeatsView @JvmOverloads constructor(
                 true -> if (isFull) firstFullCircle else firstEmptyCircle
                 false -> if (isFull) firstFullCircleNoEmphasis else firstEmptyCircleNoEmphasis
             }
-            else -> if (isFull) fullCircle else emptyCircle
+            in 1 until beatsPerMeasure -> if (isFull) fullCircle else emptyCircle
+            else -> offCircle
         }
     }
 

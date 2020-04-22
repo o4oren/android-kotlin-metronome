@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="geva.oren.android_kotlin_metronome.MainActivity">
     <item
-        android:id="@+id/settings_fragment"
+        android:id="@+id/info_fragment"
         android:orderInCategory="100"
-        android:title="@string/settings_menu_item"
-        app:showAsAction="never" />
+        android:title="@string/info_menu_item"
+        android:icon="@drawable/ic_info_white_36dp"
+        app:showAsAction="always" />
 </menu>

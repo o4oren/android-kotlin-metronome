@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">Metronome</string>
-    <string name="settings_menu_item">Settings</string>
+    <string name="info_menu_item">Information</string>
     <!-- Strings used for fragments for navigation -->
     <string name="metronome_fragment_label">Metronome</string>
-    <string name="settings_fragment_label">Settings</string>
+    <string name="info_fragment_label">About</string>
     <string name="notification_title">Metronome</string>
     <string name="notification_message">Metronome is running...</string>
     <string name="next">Next</string>
