@@ -94,6 +94,28 @@ class MetronomeService : Service() {
         startForeground(1, notification)
     }
 
+    fun setBeatsUp(): Int {
+        if(beatsPerMeasure < 9) {
+            beatsPerMeasure++
+            if (isPlaying) {
+                pause()
+                play()
+            }
+        }
+        return beatsPerMeasure
+    }
+
+    fun setBeatsDown(): Int {
+        if(beatsPerMeasure > 1) {
+            beatsPerMeasure--
+            if (isPlaying) {
+                pause()
+                play()
+            }
+        }
+        return beatsPerMeasure
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         Log.i(TAG, "Metronome service destroyed")

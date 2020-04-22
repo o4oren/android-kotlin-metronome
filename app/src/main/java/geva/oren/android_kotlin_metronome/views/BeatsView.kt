@@ -19,7 +19,7 @@ class BeatsView @JvmOverloads constructor(
     var beats = 4
         set(beats) {
             field = beats
-            createBeats()
+            resetBeats(true)
         }
     var isEmphasis = true
     set(isEmphasis: Boolean) {
@@ -95,17 +95,5 @@ class BeatsView @JvmOverloads constructor(
         if (resetHighlightedBeat) highlightedBeat = -1
         removeAllViews()
         createBeats()
-    }
-
-    fun inc(): Int {
-        if (beats < 10)
-            beats++
-        return beats
-    }
-
-    fun dec(): Int {
-        if (beats > 1)
-            beats--
-        return beats
     }
 }

@@ -46,8 +46,20 @@ class MetronomeFragment : Fragment(),
             val isEmphasis = metronomeService?.toggleEmphasis()
             beatsView.isEmphasis =  isEmphasis!!
         }
+        beatsUpButton.setOnClickListener() { this.updateBeatsUp() }
+        beatsDownButton.setOnClickListener() { this.updateBeatsDown() }
         rotaryKnob.listener = this
         setBpmText(rotaryKnob.value)
+    }
+
+    private fun updateBeatsUp() {
+        val beats = metronomeService?.setBeatsUp()
+        beatsView.beats = beats!!
+    }
+
+    private fun updateBeatsDown() {
+        val beats = metronomeService?.setBeatsDown()
+        beatsView.beats = beats!!
     }
 
     private fun tapTempAction() {

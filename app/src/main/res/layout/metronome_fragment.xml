@@ -102,11 +102,11 @@
             class="geva.oren.android_kotlin_metronome.views.BeatsView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginBottom="24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/bpmText"
-            app:layout_constraintStart_toStartOf="@+id/bpmText"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bpmText" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -227,7 +227,7 @@
         app:knobDrawable="@drawable/ic_rotary_knob"
         app:layout_constraintStart_toStartOf="@+id/toneButton"
         app:layout_constraintTop_toBottomOf="@+id/toneButton"
-        app:initialValue="40"
+        app:initialValue="130"
         app:maxValue="220"
         app:minValue="40" />
 
