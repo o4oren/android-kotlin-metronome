@@ -25,6 +25,7 @@ class MetronomeFragment : Fragment(),
     private var isBound = false
     private var metronomeService: MetronomeService? = null
     private val TAG = "METRONOME_FRAGMENT"
+    private var lastTapMilis: Long = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,12 +41,22 @@ class MetronomeFragment : Fragment(),
         pauseButton.setOnClickListener() { this.pause() }
         rhythmButton.setOnClickListener() { this.nextRhythm() }
         toneButton.setOnClickListener() { this.nextTone() }
+        tapTempoButton.setOnClickListener() { this.tapTempAction() }
         emphasisButton.setOnClickListener() {v ->
             val isEmphasis = metronomeService?.toggleEmphasis()
             beatsView.isEmphasis =  isEmphasis!!
         }
         rotaryKnob.listener = this
         setBpmText(rotaryKnob.value)
+    }
+
+    private fun tapTempAction() {
+        val currentMilis = System.currentTimeMillis()
+        val difference = currentMilis - lastTapMilis
+        val calculatedBpm = (60000 / difference).toInt()
+        val bpm = metronomeService?.setInterval(calculatedBpm)
+        bpmText.text = bpm.toString()
+        lastTapMilis = currentMilis
     }
 
     private fun bindService() {

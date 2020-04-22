@@ -23,6 +23,8 @@ class MetronomeService : Service() {
     private val TAG = "METRONOME_SERVICE"
     private val CHANNEL_ID = "METRONOME SERVICE"
     private val STOP_SERVICE = "STOP_METRONOME_SERVICE"
+    private val MAX_BPM = 220
+    private val MIN_BPM = 40
     private val binder = MetronomeBinder()
     private lateinit var soundPool: SoundPool
     private var tickJob: Job? = null
@@ -138,9 +140,15 @@ class MetronomeService : Service() {
      * Accepts bpm value an sets the interval in ms
      * @param bpm - the bpm value
      */
-    fun setInterval(bpm: Int) {
-        this.bpm = bpm
-        interval = 60000 / (bpm * rhythm.value)
+    fun setInterval(bpm: Int): Int {
+        if (bpm < MIN_BPM)
+            this.bpm = MIN_BPM
+        else if (bpm > MAX_BPM)
+            this.bpm = MAX_BPM
+        else
+            this.bpm = bpm
+        interval = 60000 / (this.bpm * rhythm.value)
+        return this.bpm
     }
 
     /**

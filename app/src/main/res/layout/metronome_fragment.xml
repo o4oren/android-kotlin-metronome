@@ -162,18 +162,32 @@
         app:layout_constraintStart_toStartOf="@+id/playButton"
         app:layout_constraintTop_toBottomOf="@+id/playButton" />
 
+    <Button
+        android:id="@+id/tapTempoButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_background"
+        android:text="@string/tap"
+        android:textColor="#fff"
+        app:layout_constraintStart_toEndOf="@+id/toneButton"
+        app:layout_constraintTop_toBottomOf="@+id/playButton" />
+
     <ImageButton
         android:id="@+id/emphasisButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/ic_emphasis"
+        android:layout_marginStart="24dp"
         android:background="@drawable/button_background"
         android:paddingHorizontal="10dp"
         android:paddingVertical="10dp"
+        android:src="@drawable/ic_emphasis"
+        app:layout_constraintBottom_toBottomOf="@+id/rhythmButton"
         app:layout_constraintEnd_toEndOf="@+id/rhythmButton"
-        app:layout_constraintStart_toStartOf="@+id/rhythmButton"
-        app:layout_constraintTop_toBottomOf="@+id/rhythmButton" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tapTempoButton"
+        app:layout_constraintTop_toTopOf="@+id/rhythmButton" />
 
     <view
         android:id="@+id/rotaryKnob"
