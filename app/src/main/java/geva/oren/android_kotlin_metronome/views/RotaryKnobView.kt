@@ -84,11 +84,11 @@ class RotaryKnobView @JvmOverloads constructor(
     private fun calculateAngle(x: Float, y: Float): Float {
         val x = (x / width.toFloat()) - 0.5
         val y = ( 1 - y / height.toFloat()) - 0.5
-        var angle = -(Math.toDegrees(atan2(y, x)) )
+        var angle = -(Math.toDegrees(atan2(y, x)))
             .toFloat() + 90
         if (angle > 180) angle -= 360;
         Log.d("KNOB", "x: $x y: $y")
-        Log.i("KNOB", "angle: $angle")
+        Log.d("KNOB", "angle: $angle")
 
         return angle
     }
@@ -117,8 +117,6 @@ class RotaryKnobView @JvmOverloads constructor(
             : Boolean {
 
         val rotationDegrees = calculateAngle(e2.x, e2.y)
-        Log.i("KNOB", "rotation degrees ${(rotationDegrees)}")
-
         // use only -150 to 150 range (knob min/max points
         if (rotationDegrees >= -150 && rotationDegrees <= 150) {
             setKnobPosition(rotationDegrees)
