@@ -3,6 +3,7 @@ package geva.oren.android_kotlin_metronome.views
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -63,15 +64,13 @@ class BeatsView @JvmOverloads constructor(
     fun nextBeat() {
         if (highlightedBeat != -1) {
             val prevBeat = getChildAt(highlightedBeat) as ImageView
+            val pervBeatIndex = highlightedBeat
             if (highlightedBeat == beatsPerMeasure - 1)
                 highlightedBeat = 0
-            else highlightedBeat++
+            else
+                highlightedBeat++
             val currentBeat = getChildAt(highlightedBeat) as ImageView
-            if (highlightedBeat == 1) {
-                prevBeat.setImageDrawable(getCircleDrawable(highlightedBeat -1 , false))
-            } else {
-                prevBeat.setImageDrawable(getCircleDrawable(highlightedBeat -1 , false))
-            }
+            prevBeat.setImageDrawable(getCircleDrawable(pervBeatIndex , false))
             currentBeat.setImageDrawable(getCircleDrawable(highlightedBeat, true))
         } else {
             highlightedBeat++
@@ -81,6 +80,7 @@ class BeatsView @JvmOverloads constructor(
     }
 
     private fun getCircleDrawable(beatIndex: Int, isFull: Boolean): Drawable? {
+        Log.i("BEATS", "i: $beatIndex, full: $isFull")
         return when (beatIndex) {
             0 -> when (isEmphasis) {
                 true -> if (isFull) firstFullCircle else firstEmptyCircle
