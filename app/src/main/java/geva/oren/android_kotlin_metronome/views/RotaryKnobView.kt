@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Matrix
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
+import android.util.Log
 import android.view.GestureDetector
 import android.view.LayoutInflater
 import android.view.MotionEvent
@@ -12,6 +13,8 @@ import android.widget.RelativeLayout
 import androidx.core.view.GestureDetectorCompat
 import geva.oren.android_kotlin_metronome.R
 import kotlinx.android.synthetic.main.rotary_knob_view.view.*
+import kotlin.math.atan2
+
 
 class RotaryKnobView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
@@ -53,15 +56,37 @@ class RotaryKnobView @JvmOverloads constructor(
     }
 
     /**
-     * Calculate the angle from x,y coordinates (cartesian to polar converstion)
+     * Calculate the angle from x,y coordinates of the touch event
+     * explanation - 0,0 in android is top left corner
+     * divided by height and width we get 0 - 1 values (0,0) top left, (1,1) bottom right
+     * while x's direction is correct - going up from left to right, y's isn't, as it's
+     * smallest value is at the top, so we reverse it by subtracting y from 1
+     * Now x is going from 0 (most left) to 1 (most right)
+     * And Y is going from 0 (most downwards) to 1 (most upwards.
+     * Lastly, we need to bring 0,0 to the middle - so subtract 0.5 from both.
+     * now 0,0 is in the middle, 0, 0.5 is at 12 o'clock and 0.5, 0 is at 3 o'clock
+     * Now that we have the coordinates in proper cartesian coordinate system, to calculate theta,
+     * we should call atan2(y,x).
+     * However, theta is the angle between the x axis and the point.
+     * Which means it rises as we turn counter clockwise. And in addition, we want the "north"
+     * to be at 12 o'clock. So we reverse the direction of the angle by prefixing it with a -
+     * and add 90 to move the "zero degrees" point north (taking care to handling the range between
+     * 180 and 270 degrees, bringing them to their proper values of -180 .. -90 by adding 360 to the
+     * value.
      *
-     * @param x
-     * @param y
+     * @param x - x coordinate of the touch event
+     * @param y - y coordinate of the touch event
      * @return
      */
     private fun calculateAngle(x: Float, y: Float): Float {
-        val angle = (-Math.toDegrees(Math.atan2(x - 0.5f.toDouble(), y - 0.5f.toDouble())))
-            .toFloat()
+        val x = (x / width.toFloat()) - 0.5
+        val y = ( 1 - y / height.toFloat()) - 0.5
+        var angle = -(Math.toDegrees(atan2(y, x)) )
+            .toFloat() + 90
+        if (angle > 180) angle -= 360;
+        Log.d("KNOB", "x: $x y: $y")
+        Log.i("KNOB", "angle: $angle")
+
         return angle
     }
 
@@ -79,14 +104,6 @@ class RotaryKnobView @JvmOverloads constructor(
         knobImageView.imageMatrix = matrix
     }
 
-    override fun onDown(event: MotionEvent): Boolean {
-        return true
-    }
-
-    override fun onSingleTapUp(e: MotionEvent): Boolean {
-        return true
-    }
-
     /**
      *
      * We're only interested in e2 - the coordinates of the end movement.
@@ -95,13 +112,11 @@ class RotaryKnobView @JvmOverloads constructor(
      */
     override fun onScroll(e1: MotionEvent, e2: MotionEvent, distanceX: Float, distanceY: Float)
             : Boolean {
-        val x = e2.x / width.toFloat()
-        val y = e2.y / height.toFloat()
 
-        // 1 - coordinate because We want 0 degrees to be in the north position
-        val rotationDegrees = calculateAngle(1 - x, 1 - y)
+        val rotationDegrees = calculateAngle(e2.x, e2.y)
+        Log.i("KNOB", "rotation degrees ${(rotationDegrees)}")
 
-        // We only want to use -150 through 150 degrees range
+        // use only -150 to 150 range (knob min/max points
         if (rotationDegrees >= -150 && rotationDegrees <= 150) {
             setKnobPosition(rotationDegrees)
 
@@ -116,15 +131,24 @@ class RotaryKnobView @JvmOverloads constructor(
         return true
     }
 
-    // Unused. Needed for GestureDetector
+    // Unused. Needed for GestureDetector implementation
+    override fun onDown(event: MotionEvent): Boolean {
+        return true
+    }
+    // Unused. Needed for GestureDetector implementation
+    override fun onSingleTapUp(e: MotionEvent): Boolean {
+        return true
+    }
+
+    // Unused. Needed for GestureDetector implementation
     override fun onFling(arg0: MotionEvent, arg1: MotionEvent, arg2: Float, arg3: Float)
             : Boolean {
         return false
     }
 
-    // Unused. Needed for GestureDetector
+    // Unused. Needed for GestureDetector implementation
     override fun onLongPress(e: MotionEvent) {}
 
-    // Unused. Needed for GestureDetector
+    // Unused. Needed for GestureDetector implementation
     override fun onShowPress(e: MotionEvent) {}
 }
