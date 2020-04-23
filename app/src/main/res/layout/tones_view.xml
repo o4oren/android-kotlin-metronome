@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/woodText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wood"
+        android:fontFamily="@font/aldrich"
+        android:textColor="@color/digitalText"/>
+
+    <TextView
+        android:id="@+id/clickText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/click"
+        android:fontFamily="@font/aldrich"
+        android:textColor="@color/faintDigitalText"/>
+
+    <TextView
+        android:id="@+id/dingText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ding"
+        android:fontFamily="@font/aldrich"
+        android:textColor="@color/faintDigitalText"/>
+
+    <TextView
+        android:id="@+id/beepText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/beep"
+        android:fontFamily="@font/aldrich"
+        android:textColor="@color/faintDigitalText"/>
+</merge>

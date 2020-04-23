@@ -2,49 +2,252 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/stopButton"
+    android:id="@+id/digitalMetronomeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MetronomeFragment">
+    android:background="@drawable/metronome_background_gradient"
+    tools:context="geva.oren.android_kotlin_metronome.fragments.MetronomeFragment">
 
-    <TextView
-        android:id="@+id/bpmText"
-        android:layout_width="wrap_content"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/screenLayout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <SeekBar
-        android:id="@+id/bpmSeekbar"
-        android:layout_width="213dp"
-        android:layout_height="32dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="24dp"
-        android:max="220"
-        android:min="40"
-        android:progress="100"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/screen_background"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bpmText" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.005">
 
-    <ImageButton
-        android:id="@+id/playButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:src="@android:drawable/ic_media_play"
-        app:layout_constraintStart_toStartOf="@+id/bpmSeekbar"
-        app:layout_constraintTop_toBottomOf="@+id/bpmSeekbar" />
+        <TextView
+            android:id="@+id/backgroundText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginBottom="32dp"
+            android:fontFamily="@font/segment7_4gml"
+            android:text="@string/eights"
+            android:textColor="@color/faintDigitalText"
+            android:textSize="@dimen/bpm_digital_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="888" />
+
+        <TextView
+            android:id="@+id/bpmText"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:fontFamily="@font/segment7_4gml"
+            android:textColor="@color/digitalText"
+            android:textSize="@dimen/bpm_digital_text"
+            app:layout_constraintBottom_toBottomOf="@+id/backgroundText"
+            app:layout_constraintEnd_toEndOf="@+id/backgroundText"
+            app:layout_constraintStart_toStartOf="@+id/backgroundText"
+            app:layout_constraintTop_toTopOf="@+id/backgroundText"
+            app:layout_constraintVertical_bias="0.478"
+            tools:text="100" />
+
+        <TextView
+            android:id="@+id/tempoLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/aldrich"
+            android:text="@string/tempo"
+            android:textColor="@color/digitalText"
+            android:textSize="@dimen/screen_label_text_size"
+            app:layout_constraintBottom_toTopOf="@+id/bpmText"
+            app:layout_constraintEnd_toEndOf="@+id/bpmText"
+            app:layout_constraintStart_toStartOf="@+id/bpmText" />
+
+        <ImageView
+            android:id="@+id/rhythmBackground"
+            android:layout_width="@dimen/rhythm_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            app:layout_constraintBottom_toBottomOf="@+id/bpmText"
+            app:layout_constraintStart_toEndOf="@+id/bpmText"
+            app:layout_constraintTop_toTopOf="@+id/bpmText"
+            android:src="@drawable/ic_notes_background_faint" />
+        <ImageView
+            android:id="@+id/rhythmBackgroundQuarterNite"
+            android:layout_width="@dimen/rhythm_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            app:layout_constraintBottom_toBottomOf="@+id/bpmText"
+            app:layout_constraintStart_toEndOf="@+id/bpmText"
+            app:layout_constraintTop_toTopOf="@+id/bpmText"
+            android:src="@drawable/ic_quarter_note_faint" />
+
+        <ImageView
+            android:id="@+id/rhythmImage"
+            android:layout_width="@dimen/rhythm_width"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="64dp"
+            android:src="@drawable/ic_quarter_note"
+            app:layout_constraintBottom_toBottomOf="@+id/bpmText"
+            app:layout_constraintStart_toEndOf="@+id/bpmText"
+            app:layout_constraintTop_toTopOf="@+id/bpmText" />
+
+        <TextView
+            android:id="@+id/rhythmLabelText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/aldrich"
+            android:text="@string/rhythm"
+            android:textColor="@color/digitalText"
+            android:textSize="@dimen/screen_label_text_size"
+            app:layout_constraintEnd_toEndOf="@+id/rhythmImage"
+            app:layout_constraintStart_toStartOf="@+id/rhythmImage"
+            app:layout_constraintTop_toTopOf="@+id/tempoLabelText" />
+
+        <geva.oren.android_kotlin_metronome.views.TonesView
+            android:id="@+id/tonesView"
+            class="geva.oren.android_kotlin_metronome.views.TonesView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/rhythmImage"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <view
+            android:id="@+id/beatsView"
+            class="geva.oren.android_kotlin_metronome.views.BeatsView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bpmText" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ImageButton
         android:id="@+id/pauseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:src="@android:drawable/ic_media_pause"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:src="@drawable/ic_pause"
         app:layout_constraintStart_toEndOf="@+id/playButton"
         app:layout_constraintTop_toTopOf="@+id/playButton" />
+
+    <ImageButton
+        android:id="@+id/playButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:src="@drawable/ic_play"
+        app:layout_constraintStart_toStartOf="@+id/screenLayout"
+        app:layout_constraintTop_toBottomOf="@+id/screenLayout" />
+
+    <ImageButton
+        android:id="@+id/rhythmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:cropToPadding="false"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:src="@drawable/ic_quarter_note_white"
+        app:layout_constraintBottom_toBottomOf="@+id/pauseButton"
+        app:layout_constraintStart_toEndOf="@+id/pauseButton"
+        app:layout_constraintTop_toTopOf="@+id/pauseButton" />
+
+    <Button
+        android:id="@+id/toneButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/tone"
+        android:textColor="#fff"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        app:layout_constraintStart_toStartOf="@+id/playButton"
+        app:layout_constraintTop_toBottomOf="@+id/playButton" />
+
+    <Button
+        android:id="@+id/tapTempoButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/button_background"
+        android:text="@string/tap"
+        android:textColor="#fff"
+        app:layout_constraintStart_toEndOf="@+id/toneButton"
+        app:layout_constraintTop_toBottomOf="@+id/playButton" />
+
+    <ImageButton
+        android:id="@+id/emphasisButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:src="@drawable/ic_emphasis"
+        app:layout_constraintBottom_toBottomOf="@+id/rhythmButton"
+        app:layout_constraintEnd_toEndOf="@+id/rhythmButton"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/tapTempoButton"
+        app:layout_constraintTop_toTopOf="@+id/rhythmButton" />
+
+    <ImageButton
+        android:id="@+id/beatsUpButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:src="@drawable/ic_arrow_drop_up"
+        app:layout_constraintBottom_toBottomOf="@+id/rhythmButton"
+        app:layout_constraintStart_toEndOf="@+id/emphasisButton"
+        app:layout_constraintTop_toTopOf="@+id/rhythmButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageButton
+        android:id="@+id/beatsDownButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/button_background"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
+        android:src="@drawable/ic_arrow_drop_down"
+        app:layout_constraintBottom_toBottomOf="@+id/rhythmButton"
+        app:layout_constraintStart_toEndOf="@+id/emphasisButton"
+        app:layout_constraintTop_toBottomOf="@+id/beatsUpButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <view
+        android:id="@+id/rotaryKnob"
+        class="geva.oren.android_kotlin_metronome.views.RotaryKnobView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        app:knobDrawable="@drawable/ic_rotary_knob"
+        app:layout_constraintStart_toStartOf="@+id/toneButton"
+        app:layout_constraintTop_toBottomOf="@+id/toneButton"
+        app:initialValue="130"
+        app:maxValue="220"
+        app:minValue="40" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

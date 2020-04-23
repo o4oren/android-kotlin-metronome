@@ -1,13 +1,34 @@
 <resources>
     <string name="app_name">Metronome</string>
-    <string name="settings_menu_item">Settings</string>
+    <string name="info_menu_item">Information</string>
     <!-- Strings used for fragments for navigation -->
     <string name="metronome_fragment_label">Metronome</string>
-    <string name="settings_fragment_label">Settings</string>
+    <string name="info_fragment_label">About</string>
+    <string name="notification_title">Metronome</string>
+    <string name="notification_message">Metronome is running...</string>
     <string name="next">Next</string>
     <string name="previous">Previous</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="bpm">BPM</string>
+    <string name="eights">888</string>
+    <string name="tempo">TEMPO</string>
+    <string name="rhythm">RHYTHM</string>
+    <string name="tone">TONE</string>
+    <string name="beat">BEAT</string>
     <string name="play">Play</string>
     <string name="stop">Stop</string>
+    <string name="wood">WOOD</string>
+    <string name="click">CLICK</string>
+    <string name="ding">DING</string>
+    <string name="beep">BEEP</string>
+    <string name="tap">tap</string>
+    <string name="about_text">Metronome is an easy to use, lightweight and comprehensive metronome
+        app.\n
+        I built this project mainly as a means to learning Kotlin and Android development.\n
+        It was designed to resemble a simple digital metronome, and include the features people
+        actually use on metronomes.\n
+        The base code is free and open source - available at <a href="https://github.com/o4oren/android-kotlin-metronome">Github</a>.
+    </string>
+    <string name="aboutFooterText">(c) Oren Geva 2020</string>
+    <string name="aboutHeading">About Metronome</string>
 </resources>

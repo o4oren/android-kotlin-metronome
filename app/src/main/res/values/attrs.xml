@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RotaryKnobView">
+        <attr name="minValue" format="integer" />
+        <attr name="maxValue" format="integer" />
+        <attr name="initialValue" format="integer" />
+        <attr name="knobDrawable" format="reference" />
+    </declare-styleable>
+</resources>
