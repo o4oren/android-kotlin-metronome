@@ -57,19 +57,22 @@ class RotaryKnobView @JvmOverloads constructor(
 
     /**
      * Calculate the angle from x,y coordinates of the touch event
-     * explanation - 0,0 in android is top left corner
-     * divided by height and width we get 0 - 1 values (0,0) top left, (1,1) bottom right
-     * while x's direction is correct - going up from left to right, y's isn't, as it's
-     * smallest value is at the top, so we reverse it by subtracting y from 1
-     * Now x is going from 0 (most left) to 1 (most right)
-     * And Y is going from 0 (most downwards) to 1 (most upwards.
-     * Lastly, we need to bring 0,0 to the middle - so subtract 0.5 from both.
-     * now 0,0 is in the middle, 0, 0.5 is at 12 o'clock and 0.5, 0 is at 3 o'clock
-     * Now that we have the coordinates in proper cartesian coordinate system, to calculate theta,
-     * we should call atan2(y,x).
-     * However, theta is the angle between the x axis and the point.
-     * Which means it rises as we turn counter clockwise. And in addition, we want the "north"
-     * to be at 12 o'clock. So we reverse the direction of the angle by prefixing it with a -
+     * explanation - 0,0 in android is top left corner.
+     * Dividing x and y by height and width we normalize them to the range of 0 - 1 values:
+     * (0,0) top left, (1,1) bottom right.
+     * While x's direction is correct - going up from left to right, y's isn't - it's
+     * lowest value is at the top. W
+     * So we reverse it by subtracting y from 1.
+     * Now x is going from 0 (most left) to 1 (most right),
+     * and Y is going from 0 (most downwards) to 1 (most upwards).
+     * We now need to bring 0,0 to the middle - so subtract 0.5 from both x and y.
+     * now 0,0 is in the middle, 0, 0.5 is at 12 o'clock and 0.5, 0 is at 3 o'clock.
+     * Now that we have the coordinates in proper cartesian coordinate system - and we can calculate
+     * "theta" - the angle between the x axis and the point by calculating atan2(y,x).
+     * However, theta is the angle between the x axis and the point, and it rises as we turn
+     * counter-clockwise. In addition, atan2 returns (in radians) angles in the range of -180
+     * through 180 degrees (-PI through PI). And we want 0 to be at 12 o'clock.
+     * So we reverse the direction of the angle by prefixing it with a minus sign,
      * and add 90 to move the "zero degrees" point north (taking care to handling the range between
      * 180 and 270 degrees, bringing them to their proper values of -180 .. -90 by adding 360 to the
      * value.
