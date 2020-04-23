@@ -22,7 +22,13 @@
     <string name="ding">DING</string>
     <string name="beep">BEEP</string>
     <string name="tap">tap</string>
-    <string name="about_text">This Metronme app is a light weight metronome, built \nby Oren Geva</string>
+    <string name="about_text">Metronome is an easy to use, lightweight and comprehensive metronome
+        app.\n
+        I built this project mainly as a means to learning Kotlin and Android development.\n
+        It was designed to resemble a simple digital metronome, and include the features people
+        actually use on metronomes.\n
+        The base code is free and open source - available at <a href="https://github.com/o4oren/android-kotlin-metronome">Github</a>.
+    </string>
     <string name="aboutFooterText">(c) Oren Geva 2020</string>
-    <string name="aboutHeading">About Classic Metronome</string>
+    <string name="aboutHeading">About Metronome</string>
 </resources>
