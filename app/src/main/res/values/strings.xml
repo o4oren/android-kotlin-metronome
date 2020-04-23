@@ -22,4 +22,7 @@
     <string name="ding">DING</string>
     <string name="beep">BEEP</string>
     <string name="tap">tap</string>
+    <string name="about_text">This Metronme app is a light weight metronome, built \nby Oren Geva</string>
+    <string name="aboutFooterText">(c) Oren Geva 2020</string>
+    <string name="aboutHeading">About Classic Metronome</string>
 </resources>

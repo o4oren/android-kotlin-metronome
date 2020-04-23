@@ -8,24 +8,40 @@
     android:background="@drawable/metronome_background_gradient">
 
     <TextView
-        android:id="@+id/aboutText"
+        android:id="@+id/aboutHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
         android:padding="20dp"
-        android:text="This Metronme app is a light weight metronome, built \nby Oren Geva"
+        android:text="@string/aboutHeading"
         android:textColor="@color/metronomeMetal"
-        app:layout_constraintBottom_toTopOf="@id/button_second"
+        android:textSize="24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/button_second"
+    <TextView
+        android:id="@+id/aboutText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/previous"
+        android:padding="20dp"
+        android:text="@string/about_text"
+        android:textColor="@color/metronomeMetal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.551"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/aboutHeading" />
+
+    <TextView
+        android:id="@+id/footerText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="@string/aboutFooterText"
+        android:textColor="@color/metronomeMetal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/aboutText" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
