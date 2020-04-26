@@ -1,16 +1,10 @@
 package geva.oren.android_kotlin_metronome.fragments
 
-import android.content.ComponentName
-import android.content.Context
-import android.content.Intent
-import android.content.ServiceConnection
 import android.os.Bundle
-import android.os.IBinder
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import geva.oren.android_kotlin_metronome.R
 import geva.oren.android_kotlin_metronome.services.MetronomeService
 import geva.oren.android_kotlin_metronome.views.RotaryKnobView
@@ -19,12 +13,8 @@ import kotlinx.android.synthetic.main.metronome_fragment.*
 /**
  * Main Metronome app fragment
  */
-class MetronomeFragment : Fragment(),
-    MetronomeService.TickListener, RotaryKnobView.RotaryKnobListener {
+class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.RotaryKnobListener {
 
-    private var isBound = false
-    private var metronomeService: MetronomeService? = null
-    private val TAG = "METRONOME_FRAGMENT"
     private var lastTapMilis: Long = 0
 
     override fun onCreateView(
@@ -36,7 +26,6 @@ class MetronomeFragment : Fragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        bindService()
         playButton.setOnClickListener() { this.play() }
         pauseButton.setOnClickListener() { this.pause() }
         rhythmButton.setOnClickListener() { this.nextRhythm() }
@@ -69,16 +58,6 @@ class MetronomeFragment : Fragment(),
         val bpm = metronomeService?.setInterval(calculatedBpm)
         bpmText.text = bpm.toString()
         lastTapMilis = currentMilis
-    }
-
-    private fun bindService() {
-        activity?.bindService(
-            Intent(
-                activity,
-                MetronomeService::class.java
-            ), mConnection, Context.BIND_AUTO_CREATE
-        )
-        isBound = true
     }
 
     private fun setBpmText(bpm: Int) {
@@ -123,28 +102,6 @@ class MetronomeFragment : Fragment(),
         metronomeService?.setInterval(bpm)
     }
 
-    private val mConnection: ServiceConnection = object : ServiceConnection {
-        override fun onServiceConnected(className: ComponentName, service: IBinder) {
-            metronomeService = (service as MetronomeService.MetronomeBinder).getService()
-            metronomeService?.addTickListener(this@MetronomeFragment)
-        }
-
-        override fun onServiceDisconnected(className: ComponentName) {
-            metronomeService = null
-            isBound = false
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (isBound) {
-            metronomeService?.removeTickListener(this)
-            // Detach our existing connection.
-            activity!!.unbindService(mConnection)
-            isBound = false
-        }
-    }
-
     /**
      * RotaryListener interface implementation
      */
@@ -155,7 +112,7 @@ class MetronomeFragment : Fragment(),
     }
 
     override fun onTick(interval: Int) {
-        if (metronomeService?.isPlaying!!)
+        if (this.isVisible  && metronomeService?.isPlaying!!)
             activity?.runOnUiThread() {beatsView.nextBeat()}
     }
 }
