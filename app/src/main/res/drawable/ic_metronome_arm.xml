@@ -1,0 +1,19 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="360dp"
+    android:height="740dp"
+    android:viewportWidth="360"
+    android:viewportHeight="740">
+  <group
+      android:name="rotationGroup"
+      android:pivotX="179.5"
+      android:pivotY="433.0"
+      android:rotation="0.0" >
+    <path
+        android:name="@string/metronome_arm"
+        android:pathData="M175.5,112.5h8v393h-8z"
+        android:strokeWidth="1"
+        android:fillColor="#D8D8D8"
+        android:strokeColor="#979797"
+        android:fillType="evenOdd"/>
+  </group>
+</vector>
