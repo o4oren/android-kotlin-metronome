@@ -80,7 +80,7 @@ class BeatsView @JvmOverloads constructor(
     }
 
     private fun getCircleDrawable(beatIndex: Int, isFull: Boolean): Drawable? {
-        Log.i("BEATS", "i: $beatIndex, full: $isFull")
+        Log.d("BEATS", "i: $beatIndex, full: $isFull")
         return when (beatIndex) {
             0 -> when (isEmphasis) {
                 true -> if (isFull) firstFullCircle else firstEmptyCircle

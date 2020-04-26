@@ -8,4 +8,10 @@
         android:title="@string/info_menu_item"
         android:icon="@drawable/ic_info"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/mechanicalMetronomeFragment"
+        android:orderInCategory="100"
+        android:title="@string/mechanical_metronome"
+        android:icon="@drawable/ic_info"
+        app:showAsAction="always" />
 </menu>

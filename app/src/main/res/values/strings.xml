@@ -31,4 +31,5 @@
     </string>
     <string name="aboutFooterText">(c) Oren Geva 2020</string>
     <string name="aboutHeading">About Metronome</string>
+    <string name="mechanical_metronome">Metronome</string>
 </resources>

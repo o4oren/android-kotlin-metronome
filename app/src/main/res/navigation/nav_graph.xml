@@ -14,15 +14,18 @@
         <action
             android:id="@+id/action_MetronomeFragment_to_InfoFragment"
             app:destination="@id/info_fragment" />
+        <action
+            android:id="@+id/action_MetronomeFragment_to_mechanicalMetronomeFragment"
+            app:destination="@id/mechanicalMetronomeFragment" />
     </fragment>
     <fragment
         android:id="@+id/info_fragment"
         android:name="geva.oren.android_kotlin_metronome.fragments.InfoFragment"
         android:label="@string/info_fragment_label"
-        tools:layout="@layout/info_fragment">
-
-        <action
-            android:id="@+id/action_InfoFragment_to_MetronomeFragment"
-            app:destination="@id/MetronomeFragment" />
-    </fragment>
+        tools:layout="@layout/info_fragment"/>
+    <fragment
+        android:id="@+id/mechanicalMetronomeFragment"
+        android:name="geva.oren.android_kotlin_metronome.fragments.MechanicalMetronomeFragment"
+        android:label="@string/mechanical_metronome"
+        tools:layout="@layout/mechanical_metronome_fragment" />
 </navigation>
