@@ -12,7 +12,11 @@ import geva.oren.android_kotlin_metronome.MainActivity
 import geva.oren.android_kotlin_metronome.R
 import kotlinx.coroutines.*
 
-
+private const val TAG = "METRONOME_SERVICE"
+private const val CHANNEL_ID = "METRONOME SERVICE"
+private const val STOP_SERVICE = "STOP_METRONOME_SERVICE"
+private const val MAX_BPM = 220
+private const val MIN_BPM = 40
 /**
  * The Metronome service is responsible for playing, stoping and timing the ticks.
  * It is a started AND bound service, so it can persist and survive device rotation, and allow
@@ -20,11 +24,6 @@ import kotlinx.coroutines.*
  * The service is starting foreground mode on play() and exits it on stop().
  */
 class MetronomeService : Service() {
-    private val TAG = "METRONOME_SERVICE"
-    private val CHANNEL_ID = "METRONOME SERVICE"
-    private val STOP_SERVICE = "STOP_METRONOME_SERVICE"
-    private val MAX_BPM = 220
-    private val MIN_BPM = 40
     private val binder = MetronomeBinder()
     private lateinit var soundPool: SoundPool
     private var tickJob: Job? = null
