@@ -7,14 +7,11 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.view.animation.RotateAnimation
 import androidx.fragment.app.Fragment
 import geva.oren.android_kotlin_metronome.R
 import geva.oren.android_kotlin_metronome.services.MetronomeService
 import kotlinx.android.synthetic.main.mechanical_metronome_fragment.*
-import kotlinx.android.synthetic.main.metronome_fragment.*
 
 
 /**
@@ -25,6 +22,7 @@ import kotlinx.android.synthetic.main.metronome_fragment.*
 class MechanicalMetronomeFragment : AbstractMetronomeFragment() {
 
     private var duration = 1000L
+    private var position = Position.CENTER
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,24 +38,24 @@ class MechanicalMetronomeFragment : AbstractMetronomeFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val an = RotateAnimation(-30.0f, 30.0f, Animation.RELATIVE_TO_PARENT, 0.5f, Animation.RELATIVE_TO_SELF, 0.6f)
-        an.duration = duration // duration in ms
-        an.repeatCount = -1 // -1 = infinite repeated
-        an.repeatMode = Animation.REVERSE // reverses each repeat
-        an.fillAfter = false // keep rotation after animation
-
-        metronomeArmView.animation = an
     }
 
     private fun animateArm(duration: Long) {
         Log.i("Mechanical", "anitate with $duration")
-        val an = RotateAnimation(-30.0f, 30.0f, Animation.RELATIVE_TO_PARENT, 0.5f, Animation.RELATIVE_TO_SELF, 0.6f)
-        an.duration = duration // duration in ms
-        an.repeatCount = -1 // -1 = infinite repeated
-        an.repeatMode = Animation.REVERSE // reverses each repeat
-        an.fillAfter = true // keep rotation after animation
 
-        metronomeArmView.animation = an
+        val animation = when(position) {
+            Position.LEFT -> AnimationUtils.loadAnimation(context, R.anim.left_to_right)
+            Position.RIGHT -> AnimationUtils.loadAnimation(context, R.anim.right_to_left)
+            else -> AnimationUtils.loadAnimation(context, R.anim.mid_to_right)
+        }
+
+        animation.duration = duration
+        metronomeArmView.startAnimation(animation)
+        position = when(position) {
+            Position.LEFT -> Position.RIGHT
+            Position.RIGHT -> Position.LEFT
+            else -> Position.RIGHT
+        }
     }
 
     private fun bindService() {
@@ -71,12 +69,17 @@ class MechanicalMetronomeFragment : AbstractMetronomeFragment() {
     }
 
     override fun onTick(interval: Int) {
-        if(duration != interval.toLong()) {
-            duration = interval.toLong()
-            activity?.runOnUiThread() {
-                animateArm(duration)
-            }
-
+        duration = interval.toLong()
+        activity?.runOnUiThread() {
+            animateArm(duration)
         }
     }
+
+    enum class Position(val value: Int) {
+        CENTER(0),
+        LEFT(1),
+        RIGHT(2);
+    }
 }
+
+
