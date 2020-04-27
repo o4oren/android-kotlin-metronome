@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import geva.oren.android_kotlin_metronome.R
@@ -23,6 +24,10 @@ class MechanicalMetronomeFragment : AbstractMetronomeFragment() {
 
     private var duration = 1000L
     private var position = Position.CENTER
+    private lateinit var MID_TO_RIGHT_ANIMATION: Animation
+    private lateinit var RIGHT_TO_LEFT_ANIMATION: Animation
+    private lateinit var LEFT_TO_RIGHT_ANIMATION: Animation
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,24 +43,31 @@ class MechanicalMetronomeFragment : AbstractMetronomeFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        MID_TO_RIGHT_ANIMATION = AnimationUtils.loadAnimation(context, R.anim.mid_to_right)
+        LEFT_TO_RIGHT_ANIMATION = AnimationUtils.loadAnimation(context, R.anim.left_to_right)
+        RIGHT_TO_LEFT_ANIMATION = AnimationUtils.loadAnimation(context, R.anim.right_to_left)
     }
 
     private fun animateArm(duration: Long) {
         Log.i("Mechanical", "anitate with $duration")
 
         val animation = when(position) {
-            Position.LEFT -> AnimationUtils.loadAnimation(context, R.anim.left_to_right)
-            Position.RIGHT -> AnimationUtils.loadAnimation(context, R.anim.right_to_left)
-            else -> AnimationUtils.loadAnimation(context, R.anim.mid_to_right)
+            Position.LEFT -> {
+                this.position = Position.RIGHT
+                LEFT_TO_RIGHT_ANIMATION
+            }
+            Position.RIGHT -> {
+                this.position = Position.LEFT
+                RIGHT_TO_LEFT_ANIMATION
+            }
+            else -> {
+                this.position = Position.RIGHT
+                MID_TO_RIGHT_ANIMATION
+            }
         }
 
         animation.duration = duration
         metronomeArmView.startAnimation(animation)
-        position = when(position) {
-            Position.LEFT -> Position.RIGHT
-            Position.RIGHT -> Position.LEFT
-            else -> Position.RIGHT
-        }
     }
 
     private fun bindService() {
