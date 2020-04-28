@@ -52,7 +52,7 @@ class MetronomeService : Service() {
         super.onCreate()
         Log.i(TAG, "Metronome service created")
         soundPool = SoundPool.Builder()
-            .setMaxStreams(1)
+            .setMaxStreams(4)
             .setAudioAttributes(
                 AudioAttributes.Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
