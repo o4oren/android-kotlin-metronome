@@ -52,7 +52,7 @@ class MetronomeService : Service() {
         super.onCreate()
         Log.i(TAG, "Metronome service created")
         soundPool = SoundPool.Builder()
-            .setMaxStreams(4)
+            .setMaxStreams(4) // to prevent delaying the next tick under any circumstances
             .setAudioAttributes(
                 AudioAttributes.Builder()
                     .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -83,8 +83,8 @@ class MetronomeService : Service() {
         val notification: Notification = Notification.Builder(this, CHANNEL_ID)
             .setContentTitle(getText(R.string.notification_title))
             .setContentText(getText(R.string.notification_message))
-            .setSmallIcon(R.drawable.ic_eighth_note)
-            .setLargeIcon(Icon.createWithResource(this, R.drawable.ic_eighth_note))
+            .setSmallIcon(R.drawable.ic_metronome_icon_white)
+            .setLargeIcon(Icon.createWithResource(this, R.drawable.ic_metronome_icon_circle_bg))
             .setContentIntent(pendingIntent)
             .addAction(stopAction)
             .setDeleteIntent(pStopSelf)
