@@ -5,7 +5,7 @@
         android:strokeColor="#FFFFFF" android:strokeWidth="0.52734375"/>
     <path android:fillColor="#FFFFFF" android:fillType="evenOdd"
         android:pathData="M57.199,20.749L72.366,88.057L33.477,88.057L48.986,20.749L57.199,20.749ZM56.22,21.899L49.835,21.899L39.92,65.621L65.923,65.621L56.22,21.899Z"
-        android:strokeColor="#FFFFFF" android:strokeWidth="0.52734375"/>
+        android:strokeColor="#FFFFFF" android:strokeWidth="1.5"/>
     <path android:fillColor="#FFFFFF" android:fillType="evenOdd"
         android:pathData="M49.01,20.749l8.284,0l-4.142,-2.531z"
         android:strokeColor="#FFFFFF" android:strokeWidth="0.52734375"/>
