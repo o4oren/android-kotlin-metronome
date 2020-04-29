@@ -28,7 +28,7 @@ class MetronomeService : Service() {
     private lateinit var soundPool: SoundPool
     private var tickJob: Job? = null
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
-    private var bpm = 130
+    var bpm = 100
     private var beatsPerMeasure = 4
     private var interval = 600
     var isPlaying = false
@@ -161,7 +161,7 @@ class MetronomeService : Service() {
      * Accepts bpm value an sets the interval in ms
      * @param bpm - the bpm value
      */
-    fun setInterval(bpm: Int): Int {
+    fun setBpm(bpm: Int): Int {
         if (bpm < MIN_BPM)
             this.bpm = MIN_BPM
         else if (bpm > MAX_BPM)
@@ -186,7 +186,7 @@ class MetronomeService : Service() {
     fun nextRhythm(): Rhythm {
         val isPlaying = this.isPlaying
         rhythm = rhythm.next()
-        setInterval(bpm)
+        setBpm(bpm)
         if (isPlaying) {
             pause()
             play()
@@ -199,7 +199,7 @@ class MetronomeService : Service() {
      */
     fun nextTone(): Tone {
         tone = tone.next()
-        setInterval(bpm)
+        setBpm(bpm)
         return tone
     }
 

@@ -10,6 +10,7 @@ import geva.oren.android_kotlin_metronome.services.MetronomeService
 import geva.oren.android_kotlin_metronome.views.RotaryKnobView
 import kotlinx.android.synthetic.main.digital_metronome_fragment.*
 
+const val DEFAULT_BPM = 100
 /**
  * Main Metronome app fragment
  */
@@ -38,8 +39,12 @@ class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.Rot
         beatsUpButton.setOnClickListener { this.updateBeatsUp() }
         beatsDownButton.setOnClickListener { this.updateBeatsDown() }
         rotaryKnob.listener = this
-        rotaryKnob.setKnobPositionByValue(100)
-        setBpmText(rotaryKnob.value)
+        val bpm = when (metronomeService?.bpm) {
+            null -> DEFAULT_BPM
+            else -> metronomeService?.bpm
+        }
+        rotaryKnob.setKnobPositionByValue(bpm!!)
+        setBpmText(bpm)
     }
 
     private fun updateBeatsUp() {
@@ -56,7 +61,7 @@ class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.Rot
         val currentMilis = System.currentTimeMillis()
         val difference = currentMilis - lastTapMilis
         val calculatedBpm = (60000 / difference).toInt()
-        val bpm = metronomeService?.setInterval(calculatedBpm)
+        val bpm = metronomeService?.setBpm(calculatedBpm)
         bpmText.text = bpm.toString()
         lastTapMilis = currentMilis
     }
@@ -103,7 +108,7 @@ class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.Rot
      */
     override fun onRotate(value: Int) {
         setBpmText(value)
-        metronomeService?.setInterval(value)
+        metronomeService?.setBpm(value)
     }
 
     override fun onTick(interval: Int) {
