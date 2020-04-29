@@ -28,7 +28,7 @@ class MetronomeService : Service() {
     private lateinit var soundPool: SoundPool
     private var tickJob: Job? = null
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
-    var bpm = 130
+    private var bpm = 130
     private var beatsPerMeasure = 4
     private var interval = 600
     var isPlaying = false
@@ -38,7 +38,7 @@ class MetronomeService : Service() {
         Tone.WOOD
     private var rhythm =
         Rhythm.QUARTER
-    var emphasis = true
+    private var emphasis = true
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         if (intent?.action==STOP_SERVICE) {
