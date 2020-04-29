@@ -10,7 +10,7 @@ import android.widget.Button
 import androidx.navigation.fragment.findNavController
 import geva.oren.android_kotlin_metronome.R
 import kotlinx.android.synthetic.main.info_fragment.*
-import kotlinx.android.synthetic.main.metronome_fragment.*
+import kotlinx.android.synthetic.main.digital_metronome_fragment.*
 
 /**
  * A fragment containing about information

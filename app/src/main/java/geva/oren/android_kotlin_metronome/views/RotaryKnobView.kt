@@ -25,6 +25,7 @@ class RotaryKnobView @JvmOverloads constructor(
     var listener: RotaryKnobListener? = null
     var value = 130
     private var knobDrawable: Drawable? = null
+    private var divider = 300f / (maxValue - minValue) //scale the results to the passed range
 
     interface RotaryKnobListener {
         fun onRotate(value: Int)
@@ -47,12 +48,14 @@ class RotaryKnobView @JvmOverloads constructor(
                 maxValue = getInt(R.styleable.RotaryKnobView_maxValue, 220) + 1
                 value = getInt(R.styleable.RotaryKnobView_initialValue, 130)
                 knobDrawable = getDrawable(R.styleable.RotaryKnobView_knobDrawable)
+                divider = 300f / (maxValue - minValue)
                 knobImageView.setImageDrawable(knobDrawable)
             } finally {
                 recycle()
             }
         }
         gestureDetector = GestureDetectorCompat(context, this)
+//        setKnobPositionByValue(100)
     }
 
     /**
@@ -101,10 +104,33 @@ class RotaryKnobView @JvmOverloads constructor(
     }
 
     private fun setKnobPosition(deg: Float) {
+        // to allow setting the knob position before onMeasure or onLayout ran
+        val x = if (width != 0) {
+            width.toFloat() / 2
+        } else {
+            resources.getDimension(R.dimen.knob_width) / 2
+        }
+
+        val y = if (height != 0) {
+            height.toFloat() / 2
+        } else {
+            resources.getDimension(R.dimen.knob_height) / 2
+        }
+
         val matrix = Matrix()
         knobImageView.scaleType = ScaleType.MATRIX
-        matrix.postRotate(deg, width.toFloat() / 2 , height.toFloat() / 2)
+        matrix.postRotate(deg, x, y)
         knobImageView.imageMatrix = matrix
+    }
+
+    /**
+     * Sets knob to value's position
+     */
+    fun setKnobPositionByValue(value: Int) {
+        var angle = ((value - minValue) * divider) -150
+        if (angle > 180) angle -= 360
+        Log.i("KNOB", "seet position to $angle")
+        setKnobPosition(angle)
     }
 
     /**
@@ -125,7 +151,6 @@ class RotaryKnobView @JvmOverloads constructor(
             // The range is the 300 degrees between -150 and 150, so we'll add 150 to adjust the
             // range to 0 - 300
             val valueRangeDegrees = rotationDegrees + 150
-                val divider = 300f / (maxValue - minValue) // scale the results to the passed range
                 value = ((valueRangeDegrees / divider) + minValue).toInt()
                 if (listener != null) listener!!.onRotate(value)
         }

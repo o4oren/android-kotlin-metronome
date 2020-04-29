@@ -8,7 +8,7 @@ import androidx.core.content.ContextCompat
 import geva.oren.android_kotlin_metronome.R
 import geva.oren.android_kotlin_metronome.services.MetronomeService
 import geva.oren.android_kotlin_metronome.views.RotaryKnobView
-import kotlinx.android.synthetic.main.metronome_fragment.*
+import kotlinx.android.synthetic.main.digital_metronome_fragment.*
 
 /**
  * Main Metronome app fragment
@@ -21,7 +21,7 @@ class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.Rot
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.metronome_fragment, container, false)
+        return inflater.inflate(R.layout.digital_metronome_fragment, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -38,6 +38,7 @@ class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.Rot
         beatsUpButton.setOnClickListener() { this.updateBeatsUp() }
         beatsDownButton.setOnClickListener() { this.updateBeatsDown() }
         rotaryKnob.listener = this
+        rotaryKnob.setKnobPositionByValue(100)
         setBpmText(rotaryKnob.value)
     }
 
