@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Metronome</string>
+    <string name="app_name">Timekeeper Metronome</string>
     <string name="info_menu_item">Information</string>
     <!-- Strings used for fragments for navigation -->
     <string name="metronome_fragment_label">Metronome</string>
@@ -30,7 +30,7 @@
         The base code is free and open source - available at <a href="https://github.com/o4oren/android-kotlin-metronome">Github</a>.
     </string>
     <string name="aboutFooterText">(c) Oren Geva 2020</string>
-    <string name="aboutHeading">About Metronome</string>
+    <string name="aboutHeading">About Timekeeper Metronome</string>
     <string name="mechanical_metronome">Metronome</string>
     <string name="metronome_arm">metronome_arm</string>
 </resources>
