@@ -26,17 +26,17 @@ class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.Rot
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        playButton.setOnClickListener() { this.play() }
-        pauseButton.setOnClickListener() { this.pause() }
-        rhythmButton.setOnClickListener() { this.nextRhythm() }
-        toneButton.setOnClickListener() { this.nextTone() }
-        tapTempoButton.setOnClickListener() { this.tapTempAction() }
-        emphasisButton.setOnClickListener() {v ->
+        playButton.setOnClickListener { this.play() }
+        pauseButton.setOnClickListener { this.pause() }
+        rhythmButton.setOnClickListener { this.nextRhythm() }
+        toneButton.setOnClickListener { this.nextTone() }
+        tapTempoButton.setOnClickListener { this.tapTempAction() }
+        emphasisButton.setOnClickListener {
             val isEmphasis = metronomeService?.toggleEmphasis()
             beatsView.isEmphasis =  isEmphasis!!
         }
-        beatsUpButton.setOnClickListener() { this.updateBeatsUp() }
-        beatsDownButton.setOnClickListener() { this.updateBeatsDown() }
+        beatsUpButton.setOnClickListener { this.updateBeatsUp() }
+        beatsDownButton.setOnClickListener { this.updateBeatsDown() }
         rotaryKnob.listener = this
         rotaryKnob.setKnobPositionByValue(100)
         setBpmText(rotaryKnob.value)
@@ -62,7 +62,7 @@ class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.Rot
     }
 
     private fun setBpmText(bpm: Int) {
-        bpmText.text = if (bpm >= 100) bpm.toString() else " ${bpm.toString()}"
+        bpmText.text = if (bpm >= 100) "$bpm" else " $bpm"
     }
 
     private fun nextTone() {
@@ -73,8 +73,7 @@ class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.Rot
     }
 
     private fun nextRhythm() {
-        val rhythm = metronomeService?.nextRhythm()
-        val drawable = when (rhythm) {
+        val drawable = when (metronomeService?.nextRhythm()) {
             MetronomeService.Rhythm.QUARTER -> R.drawable.ic_quarter_note
             MetronomeService.Rhythm.EIGHTH -> R.drawable.ic_eighth_note
             MetronomeService.Rhythm.SIXTEENTH -> R.drawable.ic_sixteenth_note
@@ -99,21 +98,16 @@ class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.Rot
         metronomeService?.pause()
     }
 
-    private fun updateBpm(bpm: Int) {
-        metronomeService?.setInterval(bpm)
-    }
-
     /**
      * RotaryListener interface implementation
      */
     override fun onRotate(value: Int) {
-        val bpm = value
-        setBpmText(bpm)
-        metronomeService?.setInterval(bpm)
+        setBpmText(value)
+        metronomeService?.setInterval(value)
     }
 
     override fun onTick(interval: Int) {
         if (this.isVisible  && metronomeService?.isPlaying!!)
-            activity?.runOnUiThread() {beatsView.nextBeat()}
+            activity?.runOnUiThread {beatsView.nextBeat()}
     }
 }
