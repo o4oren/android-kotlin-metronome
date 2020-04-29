@@ -10,6 +10,8 @@ import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import geva.oren.android_kotlin_metronome.R
 
+const val MAX_BEAT = 9
+
 /**
  * Displays the beats and active beat dynamically
  */
@@ -22,7 +24,6 @@ class BeatsView @JvmOverloads constructor(
             field = beats
             resetBeats(true)
         }
-    val MAX_BEAT = 9
     var isEmphasis = true
     set(isEmphasis: Boolean) {
         field = isEmphasis
@@ -80,7 +81,7 @@ class BeatsView @JvmOverloads constructor(
     }
 
     private fun getCircleDrawable(beatIndex: Int, isFull: Boolean): Drawable? {
-        Log.i("BEATS", "i: $beatIndex, full: $isFull")
+        Log.d("BEATS", "i: $beatIndex, full: $isFull")
         return when (beatIndex) {
             0 -> when (isEmphasis) {
                 true -> if (isFull) firstFullCircle else firstEmptyCircle

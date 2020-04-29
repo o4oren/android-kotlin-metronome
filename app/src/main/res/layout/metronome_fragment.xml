@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/metronome_background_gradient"
-    tools:context="geva.oren.android_kotlin_metronome.fragments.MetronomeFragment">
+    tools:context="geva.oren.android_kotlin_metronome.fragments.DigitalMetronomeFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/screenLayout"
