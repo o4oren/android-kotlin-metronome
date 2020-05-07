@@ -38,15 +38,24 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="888" />
 
-        <TextView
+        <EditText
             android:id="@+id/bpmText"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            android:backgroundTint="@android:color/transparent"
+            android:textColorHighlight="@android:color/transparent"
+            android:inputType="number"
+            android:maxLength="3"
+            android:hint="BPM"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
             android:fontFamily="@font/segment7_4gml"
             android:textColor="@color/digitalText"
             android:textSize="@dimen/bpm_digital_text"
             app:layout_constraintBottom_toBottomOf="@+id/backgroundText"
             app:layout_constraintEnd_toEndOf="@+id/backgroundText"
+            android:textCursorDrawable="@null"
             app:layout_constraintStart_toStartOf="@+id/backgroundText"
             app:layout_constraintTop_toTopOf="@+id/backgroundText"
             app:layout_constraintVertical_bias="0.478"

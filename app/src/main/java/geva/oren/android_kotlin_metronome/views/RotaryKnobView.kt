@@ -55,7 +55,6 @@ class RotaryKnobView @JvmOverloads constructor(
             }
         }
         gestureDetector = GestureDetectorCompat(context, this)
-//        setKnobPositionByValue(100)
     }
 
     /**

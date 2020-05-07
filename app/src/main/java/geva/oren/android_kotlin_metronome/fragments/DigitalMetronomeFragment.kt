@@ -1,20 +1,25 @@
 package geva.oren.android_kotlin_metronome.fragments
 
+import android.content.Context
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import geva.oren.android_kotlin_metronome.R
 import geva.oren.android_kotlin_metronome.services.MetronomeService
 import geva.oren.android_kotlin_metronome.views.RotaryKnobView
 import kotlinx.android.synthetic.main.digital_metronome_fragment.*
 
+
 const val DEFAULT_BPM = 100
 /**
  * Main Metronome app fragment
  */
-class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.RotaryKnobListener {
+class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.RotaryKnobListener,
+    TextView.OnEditorActionListener, View.OnTouchListener {
 
     private var lastTapMilis: Long = 0
 
@@ -45,6 +50,10 @@ class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.Rot
         }
         rotaryKnob.setKnobPositionByValue(bpm!!)
         setBpmText(bpm)
+        bpmText.isCursorVisible = false
+        bpmText.setOnEditorActionListener(this)
+        bpmText.setOnTouchListener(this)
+
     }
 
     private fun updateBeatsUp() {
@@ -62,12 +71,16 @@ class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.Rot
         val difference = currentMilis - lastTapMilis
         val calculatedBpm = (60000 / difference).toInt()
         val bpm = metronomeService?.setBpm(calculatedBpm)
-        bpmText.text = bpm.toString()
+        bpmText.setText(getBpmText(bpm!!))
         lastTapMilis = currentMilis
     }
 
     private fun setBpmText(bpm: Int) {
-        bpmText.text = if (bpm >= 100) "$bpm" else " $bpm"
+        bpmText.setText(getBpmText(bpm))
+    }
+
+    private fun getBpmText(bpm: Int): String {
+        return if (bpm >= 100) "$bpm" else " $bpm"
     }
 
     private fun nextTone() {
@@ -114,5 +127,32 @@ class DigitalMetronomeFragment : AbstractMetronomeFragment(), RotaryKnobView.Rot
     override fun onTick(interval: Int) {
         if (this.isVisible  && metronomeService?.isPlaying!!)
             activity?.runOnUiThread {beatsView.nextBeat()}
+    }
+
+    /**
+     * On text edit action for bpmText
+     */
+    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+        bpmText.isCursorVisible = true
+        if (actionId == EditorInfo.IME_ACTION_DONE) {
+            val imm = v!!.context
+                .getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(v.windowToken, 0)
+            val bpm = v.text.toString().toInt()
+            metronomeService?.setBpm(bpm)
+            rotaryKnob.setKnobPositionByValue(bpm)
+            bpmText.isCursorVisible = false
+            return true
+        }
+        bpmText.isCursorVisible = false
+        return false
+    }
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        if(v == bpmText) {
+            v as EditText
+            v.isCursorVisible = true
+        }
+        return false
     }
 }
