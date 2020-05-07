@@ -9,7 +9,7 @@
         android:id="@+id/MetronomeFragment"
         android:name="geva.oren.android_kotlin_metronome.fragments.DigitalMetronomeFragment"
         android:label="@string/metronome_fragment_label"
-        tools:layout="@layout/metronome_fragment">
+        tools:layout="@layout/digital_metronome_fragment">
 
         <action
             android:id="@+id/action_MetronomeFragment_to_InfoFragment"

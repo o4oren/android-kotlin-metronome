@@ -25,7 +25,7 @@ class BeatsView @JvmOverloads constructor(
             resetBeats(true)
         }
     var isEmphasis = true
-    set(isEmphasis: Boolean) {
+    set(isEmphasis) {
         field = isEmphasis
         resetBeats(false)
     }

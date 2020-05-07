@@ -1,7 +1,5 @@
 package geva.oren.android_kotlin_metronome.fragments
 
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,29 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import androidx.fragment.app.Fragment
 import geva.oren.android_kotlin_metronome.R
-import geva.oren.android_kotlin_metronome.services.MetronomeService
 import kotlinx.android.synthetic.main.mechanical_metronome_fragment.*
 
 
 /**
- * A simple [Fragment] subclass.
- * Use the [MechanicalMetronomeFragment.newInstance] factory method to
- * create an instance of this fragment.
+ * Mechanical metronome fragment
  */
 class MechanicalMetronomeFragment : AbstractMetronomeFragment() {
 
     private var duration = 1000L
     private var position = Position.CENTER
-    private lateinit var MID_TO_RIGHT_ANIMATION: Animation
-    private lateinit var RIGHT_TO_LEFT_ANIMATION: Animation
-    private lateinit var LEFT_TO_RIGHT_ANIMATION: Animation
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private lateinit var midToRightAnimation: Animation
+    private lateinit var rightToLeftAnimation: Animation
+    private lateinit var leftToRightAnimation: Animation
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,9 +32,9 @@ class MechanicalMetronomeFragment : AbstractMetronomeFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        MID_TO_RIGHT_ANIMATION = AnimationUtils.loadAnimation(context, R.anim.mid_to_right)
-        LEFT_TO_RIGHT_ANIMATION = AnimationUtils.loadAnimation(context, R.anim.left_to_right)
-        RIGHT_TO_LEFT_ANIMATION = AnimationUtils.loadAnimation(context, R.anim.right_to_left)
+        midToRightAnimation = AnimationUtils.loadAnimation(context, R.anim.mid_to_right)
+        leftToRightAnimation = AnimationUtils.loadAnimation(context, R.anim.left_to_right)
+        rightToLeftAnimation = AnimationUtils.loadAnimation(context, R.anim.right_to_left)
     }
 
     private fun animateArm(duration: Long) {
@@ -54,15 +43,15 @@ class MechanicalMetronomeFragment : AbstractMetronomeFragment() {
         val animation = when(position) {
             Position.LEFT -> {
                 this.position = Position.RIGHT
-                LEFT_TO_RIGHT_ANIMATION
+                leftToRightAnimation
             }
             Position.RIGHT -> {
                 this.position = Position.LEFT
-                RIGHT_TO_LEFT_ANIMATION
+                rightToLeftAnimation
             }
             else -> {
                 this.position = Position.RIGHT
-                MID_TO_RIGHT_ANIMATION
+                midToRightAnimation
             }
         }
 
@@ -70,19 +59,9 @@ class MechanicalMetronomeFragment : AbstractMetronomeFragment() {
         metronomeArmView.startAnimation(animation)
     }
 
-    private fun bindService() {
-        activity?.bindService(
-            Intent(
-                activity,
-                MetronomeService::class.java
-            ), mConnection, Context.BIND_AUTO_CREATE
-        )
-        isBound = true
-    }
-
     override fun onTick(interval: Int) {
         duration = interval.toLong()
-        activity?.runOnUiThread() {
+        activity?.runOnUiThread {
             animateArm(duration)
         }
     }
