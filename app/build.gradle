@@ -10,8 +10,8 @@ android {
         applicationId "geva.oren.android_kotlin_metronome"
         minSdkVersion 26
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.2.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
